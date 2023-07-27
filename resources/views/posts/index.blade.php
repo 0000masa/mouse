@@ -17,7 +17,7 @@
                     @foreach($articles as $article)
                         <div class='post'>
                              <a href="/posts/{{ $article->product }}"><h2 class='product'>{{$article->product}}</h2></a>
-                             <a href="/manufactures/{{ $article->manufacture->id }}">{{ $article->manufacture->name }}</a>
+                            
                             <p class='explanation'>{{$article->explanation}}</p>
                             <form action="/posts/{{ $article->id }}" id="form_{{ $article->id }}" method="post">
                                 @csrf
