@@ -8,11 +8,13 @@
     </head>
     <body>
         <x-app-layout>
-            <x-slot name="header">
-                <h1>投稿一覧</h1>
-                 ログインユーザー:{{ Auth::user()->name }}
-            </x-slot>
-            <a href="/posts/create">create</a>
+         <x-slot name="header">
+        <h1>投稿一覧</h1>
+        <p>ログインユーザー:{{ Auth::user()->name }}<br></p>
+        </x-slot>
+                 
+            
+            <a href="/posts/create">新規投稿作成</a>
                 <div class='posts'>
                     @foreach($articles as $article)
                         <div class='post'>
@@ -28,7 +30,9 @@
                     @endforeach
               
                 </div>
-                <div class='paginate'>{{ $articles->links()}}</div>
+               <div class='paginate'>
+                    {{ $articles->links() }}
+                </div>
                 <script>
                     function deletePost(id) {
                         'use strict'
@@ -38,6 +42,6 @@
                         }
                     }
                 </script>
-        </x-app-layout>
+                </x-app-layout>
     </body>
 </html>
