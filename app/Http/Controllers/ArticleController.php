@@ -12,4 +12,10 @@ class ArticleController extends Controller
         return view('posts.index')->with(['articles' => $article->getPaginateByLimit()]);  
        
     }
+    
+    public function show(Article $article)
+    {
+        return view('posts.show')->with(['article' => $article]);
+    
+    }
 }

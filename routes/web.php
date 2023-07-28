@@ -14,6 +14,7 @@ use App\Http\Controllers\ArticleController;
 |
 */
 Route::get('/', [ArticleController::class, 'index'])->middleware('auth');
+Route::get('/posts/{article}', [ArticleController::class ,'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
