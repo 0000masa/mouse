@@ -18,11 +18,10 @@
                 <div class='posts'>
                     @foreach($articles as $article)
                         <div class='post'>
-                            <a href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
                              <a href="/posts/{{ $article->id }}"><h2 class='product'>{{$article->product}}</h2></a>
                             
                             <p class='explanation'>{{$article->explanation}}</p>
-                            
+                            <a href="">{{ $article->user->name }}</a>
                         </div>
                     @endforeach
               
