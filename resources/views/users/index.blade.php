@@ -12,16 +12,15 @@
         <h1>投稿一覧</h1>
         <p>ログインユーザー:{{ Auth::user()->name }}<br></p>
         </x-slot>
-                 
+                 {{ $articles[0]->user->name }}さんの投稿
             
-            <a href="/posts/create">新規投稿作成</a>
                 <div class='posts'>
                     @foreach($articles as $article)
                         <div class='post'>
                              <a href="/posts/{{ $article->id }}"><h2 class='product'>{{$article->product}}</h2></a>
                             
                             <p class='explanation'>{{$article->explanation}}</p>
-                            <a href="">{{ $article->user->name }}</a>
+                            
                         </div>
                     @endforeach
               

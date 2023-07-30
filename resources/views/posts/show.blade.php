@@ -31,6 +31,18 @@
                 {{ $article->price }}
            </p>
        </div>
+        <div>
+           <p>
+               接続方式<br>
+                {{ $article->connection->name }}
+           </p>
+       </div>
+       <div>
+           <p>
+               使用電池<br>
+                {{ $article->battery->battery }}
+           </p>
+       </div>
        <div>
            <p>
                重さ<br>
