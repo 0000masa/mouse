@@ -10,6 +10,12 @@
     </head>
     <x-app-layout>
     <body>
+        <a href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+        @if (Auth::check() && $article->user_id === Auth::user()->id)
+        <div class='edit'>
+            <a href="/posts/{{$article->id}}/edit">編集</a>
+        </div>
+        @endif
         <h1 class="product">
             {{ $article->product }}
         </h1>
