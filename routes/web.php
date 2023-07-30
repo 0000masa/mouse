@@ -15,7 +15,7 @@ use App\Http\Controllers\UserController;
 |
 */
 Route::get('/', [ArticleController::class, 'index'])->middleware('auth');
-Route::get('/posts/{article}', [ArticleController::class ,'show']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/users/{user}', [UserController::class,'index']);
+    Route::get('/posts/create', [ArticleController::class, 'create']);
+    Route::get('/posts/{article}', [ArticleController::class ,'show']);
 });
 
 require __DIR__.'/auth.php';
