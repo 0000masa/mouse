@@ -9,7 +9,7 @@
     <body>
         <x-app-layout>
         <p>ログインユーザー:{{ Auth::user()->name }}<br></p>
-        <form action="/posts" method="POST">
+        <form action="/posts" method="POST"enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
             <div class="product">
@@ -69,10 +69,15 @@
                     @endforeach
                 </select>
             </div>
+            
             <div class="explanation">
                 <h2>説明</h2>
                 <textarea name="post[explanation]" >{{ old('post.explanation') }}</textarea>
                 <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
+            </div>
+            <div class="image">
+                <input type="file" name="post[image_url]">
+                 <p class="image__error" style="color:red">{{ $errors->first('post.image_url') }}</p>
             </div>
             
             <input type="submit" value="投稿">

@@ -8,6 +8,8 @@ use App\Models\Manufacture;
 use App\Models\Connection;
 use App\Models\Battery;
 use App\Models\Evaluation;
+use App\Http\Requests\PostRequest;
+use Cloudinary; 
 
 class ArticleController extends Controller
 {
@@ -26,5 +28,40 @@ class ArticleController extends Controller
     public function create(Manufacture $manufacture,Connection $connection,Battery $battery,Evaluation $evaluation)
     {
         return view('posts.create')->with(['manufactures' => $manufacture->get(),'connections' => $connection->get(),'batteries' => $battery->get(),'evaluations' => $evaluation->get()]);
+    }
+    
+    public function store(Request $request, Article $article)
+    {
+        $request->validate([
+             'post.product' => 'required|string|max:100',
+             'post.price' => 'required|numeric|max:1000000',
+             'post.maximum_dpi' => 'nullable|numeric|max:1000000',
+             'post.weight' => 'required|numeric|max:10000',
+             'post.buttons' => 'nullable|numeric|max:100',
+            'post.explanation' => 'required|string|max:4000',
+            'post.image_url' => 'nullable|image',
+        ],
+        [
+             'post.product' => '商品名を入力してください。',
+             'post.price' => '金額を入力してください',
+             'post.maximum_dpi' => '最大DPIを入力してください',
+             'post.weight' => '重さを入力してください',
+             'post.buttons' => 'ボタン数を入力してください',
+            'post.explanation' => '説明を入力してください',
+            'post.image_url' => '画像データを選択してください',
+        ]);
+        $input = $request['post'];
+        
+       
+        $image_url = Cloudinary::upload($request->file('post.image_url')->getRealPath())->getSecurePath();
+        
+        $input['image_url'] = $image_url;
+        
+        
+
+        
+        $article->fill($input)->save();
+        
+        return redirect('/posts/' . $article->id);
     }
 }

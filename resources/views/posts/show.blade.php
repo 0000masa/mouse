@@ -17,8 +17,11 @@
         </div>
         @endif
         <h1 class="product">
-            {{ $article->product }}
+            {{$article->product}}
         </h1>
+        <div>
+                <img src="{{ $article->image_url }}" alt="画像が読み込めません。"/>
+        </div>
         <div>
            <p>
                評価<br>
