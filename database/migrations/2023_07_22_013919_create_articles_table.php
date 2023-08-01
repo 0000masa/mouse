@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('product', 50);
             $table->integer('price');
             $table->integer('weight');
-            $table->integer('maximum_dpi');
-            $table->integer('buttons');
+            $table->integer('maximum_dpi')->nullable();
+            $table->integer('buttons')->nullable();
             $table->string('explanation', 200);
+            $table->string('image_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

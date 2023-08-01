@@ -9,6 +9,21 @@ class Article extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+    'user_id',
+    'product',
+    'price',
+    'weight',
+    'maximum_dpi',
+    'buttons',
+    'manufacture_id',
+    'connection_id',
+    'battery_id',
+    'evaluation_id',
+    'explanation',
+    'image_url',
+    ];
+    
     public function getPaginateByLimit(int $limit_count = 10)
     {
         // updated_atで降順に並べたあと、limitで件数制限をかける
