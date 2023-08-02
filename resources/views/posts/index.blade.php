@@ -10,7 +10,7 @@
         <x-app-layout>
          <x-slot name="header">
         <h1>投稿一覧</h1>
-        <p>ログインユーザー:{{ Auth::user()->name }}<br></p>
+        <p>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></p>
         </x-slot>
                  
             

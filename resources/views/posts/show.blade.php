@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="footer">
-            <a href="/">戻る</a>
+            <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
         </div>
     </body>
     </x-app-layout>
