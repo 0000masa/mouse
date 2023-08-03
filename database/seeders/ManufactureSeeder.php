@@ -16,10 +16,38 @@ class ManufactureSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('manufactures')->insert([
-                'name' => 'Logicool',
+        DB::table('manufactures')->insert([[
+                'name' => 'SteelSeries',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
-         ]);
+         ],[
+                'name' => 'Corsair',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],[
+                'name' => 'ROCCAT',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],[
+                'name' => 'HyperX',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],[
+                'name' => 'ROG',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],[
+                'name' => 'エレコム',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],[
+                'name' => 'ZOWIE',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],[
+                'name' => 'その他',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ]]);
     }
 }

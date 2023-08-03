@@ -9,12 +9,9 @@
     <body>
         <x-app-layout>
          <x-slot name="header">
-        <h1>投稿一覧</h1>
-        <p>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></p>
+             
         </x-slot>
-                 
-            
-            <a href="/posts/create">新規投稿作成</a>
+            <h1>投稿一覧</h1>
                 <div class='posts'>
                     @foreach($articles as $article)
                         <div class='post'>

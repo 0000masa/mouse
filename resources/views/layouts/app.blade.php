@@ -22,6 +22,9 @@
             @if (isset($header))
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                         <p>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></br>
+                         <a href="/searches">マウス検索</a></p>
+                         <a href="/posts/create">新規投稿作成</a>
                         {{ $header }}
                     </div>
                 </header>

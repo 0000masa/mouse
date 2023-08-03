@@ -17,7 +17,7 @@ class ConnectionSeeder extends Seeder
     public function run()
     {
         DB::table('connections')->insert([
-                'name' => '無線',
+                'name' => '有線',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
          ]);

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/create', [ArticleController::class, 'create']);
     Route::get('/posts/{article}', [ArticleController::class ,'show']);
     Route::post('/posts', [ArticleController::class, 'store']);
+    Route::get('/searches', [SearchController::class, 'index']);
+    Route::get('searches/do',[SearchController::class,'search']);
 });
 
 require __DIR__.'/auth.php';
