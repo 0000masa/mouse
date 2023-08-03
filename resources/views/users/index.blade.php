@@ -11,8 +11,12 @@
          <x-slot name="header">
         
         </x-slot>
+        @if(count($articles) > 0)
                  {{ $articles[0]->user->name }}さんの投稿
-            
+        @else         
+        投稿はありません        
+        @endif
+        
                 <div class='posts'>
                     @foreach($articles as $article)
                         <div class='post'>

@@ -54,6 +54,7 @@ class ArticleController extends Controller
         
        if ($request->hasFile('post.image_url')) {
         $image_url = Cloudinary::upload($request->file('post.image_url')->getRealPath())->getSecurePath();
+        //$input += ['image_url' => $image_url];
         
         $input['image_url'] = $image_url;
         
