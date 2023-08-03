@@ -19,7 +19,7 @@ class SearchController extends Controller
          return view('searches.index')->with(['manufactures' => $manufacture->get(),'connections' => $connection->get(),'batteries' => $battery->get(),'evaluations' => $evaluation->get(),'product'=>$product]);
      }
      
-     public function search(Request $request)
+     public function search(Request $request,Article $article)
      {
          $product = $request->input('product');
          $manufacture = $request->input('manufacture');
@@ -38,7 +38,7 @@ class SearchController extends Controller
             })->join('batteries', function ($query) use ($request) {
             $query->on('articles.battery_id', '=', 'batteries.id');
             });
-
+    
         if(!empty($manufacture)) {
             $query->where('manufacture_id', 'LIKE', $manufacture);
         }
@@ -54,9 +54,14 @@ class SearchController extends Controller
         if(!empty($product)) {
             $query->where('product', 'LIKE', "%{$product}%");
         }
-
+        
+        
         $items = $query->paginate(10);
+       //$product = $items['product'];
+       //$items = $article->where('product', '=', $product)->paginate();
        
-         return view('searches/result', ['items' => $items]);
+       
+       
+         return view('searches/result', ['items' => $items ,'article'=>$article]);
      }
 }
