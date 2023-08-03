@@ -52,16 +52,16 @@ class ArticleController extends Controller
         ]);
         $input = $request['post'];
         
-       
+       if ($request->hasFile('post.image_url')) {
         $image_url = Cloudinary::upload($request->file('post.image_url')->getRealPath())->getSecurePath();
         
         $input['image_url'] = $image_url;
         
-        
+       }
 
         
         $article->fill($input)->save();
         
-        return redirect('/posts/' . $article->id);
+        return redirect('/');
     }
 }

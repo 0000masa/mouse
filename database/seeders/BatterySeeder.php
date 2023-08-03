@@ -17,7 +17,7 @@ class BatterySeeder extends Seeder
     public function run()
     {
         DB::table('batteries')->insert([
-                'battery' => '充電式',
+                'battery' => '有線',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
          ]);

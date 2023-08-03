@@ -9,23 +9,23 @@
     <body>
         <x-app-layout>
          <x-slot name="header">
-        
+             
         </x-slot>
-                 {{ $articles[0]->user->name }}さんの投稿
-            
-                <div class='posts'>
-                    @foreach($articles as $article)
-                        <div class='post'>
-                             <a href="/posts/{{ $article->id }}"><h2 class='product'>{{$article->product}}</h2></a>
+            <h1>検索結果一覧</h1>
+                <div class='result'>
+                    @foreach($items as $item)
+                        <div class='result'>
+                            <a href="/users/{{ $item->user->id }}">{{ $item->user->name }}</a>
+                             <a href="/posts/{{ $item->id }}"><h2 class='product'>{{$item->product}}</h2></a>
                             
-                            <p class='explanation'>{{$article->explanation}}</p>
+                            <p class='explanation'>{{$item->explanation}}</p>
                             
                         </div>
                     @endforeach
               
                 </div>
                <div class='paginate'>
-                    {{ $articles->links() }}
+                    {{ $items->links() }}
                 </div>
                 
                 </x-app-layout>

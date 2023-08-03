@@ -8,7 +8,9 @@
     </head>
     <body>
         <x-app-layout>
-        <p>ログインユーザー:{{ Auth::user()->name }}<br></p>
+         <x-slot name="header">
+             
+        </x-slot>
         <form action="/posts" method="POST"enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
@@ -83,7 +85,7 @@
             <input type="submit" value="投稿">
         </form>
             <div class='footer'>
-                <a href="/">戻る</a>
+                 <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
             </div>
         </div>
         </x-app-layout>
