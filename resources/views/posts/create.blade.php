@@ -43,7 +43,11 @@
                 <h2>製造メーカー</h2>
                 <select name="post[manufacture_id]">
                     @foreach($manufactures as $manufacture)
-                        <option value="{{ $manufacture->id }}">{{ $manufacture->name }}</option>
+                        <option value="{{ $manufacture->id }}" 
+                        @if (old('post.manufacture_id')==$manufacture->id)
+                            selected 
+                        @endif>
+                            {{ $manufacture->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -51,7 +55,11 @@
                 <h2>接続方式</h2>
                 <select name="post[connection_id]">
                     @foreach($connections as $connection)
-                        <option value="{{ $connection->id }}">{{ $connection->name }}</option>
+                        <option value="{{ $connection->id }}" 
+                        @if (old('post.connection_id')==$connection->id)
+                            selected 
+                        @endif>
+                            {{ $connection->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -59,7 +67,11 @@
                 <h2>使用電池</h2>
                 <select name="post[battery_id]">
                     @foreach($batteries as $battery)
-                        <option value="{{ $battery->id }}">{{ $battery->battery }}</option>
+                        <option value="{{ $battery->id }}" 
+                        @if (old('post.battery_id')==$battery->id)
+                            selected  
+                        @endif>
+                            {{ $battery->battery }}</option>
                     @endforeach
                 </select>
             </div>
@@ -67,7 +79,11 @@
                 <h2>評価</h2>
                 <select name="post[evaluation_id]">
                     @foreach($evaluations as $evaluation)
-                        <option value="{{ $evaluation->id }}">{{ $evaluation->level }}</option>
+                        <option value="{{ $evaluation->id }}" 
+                        @if (old('post.evaluation_id')==$evaluation->id)
+                            selected
+                        @endif>
+                            {{ $evaluation->level }}</option>
                     @endforeach
                 </select>
             </div>
@@ -78,7 +94,9 @@
                 <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
             </div>
             <div class="image">
-                <input type="file" name="post[image_url]">
+                <h2>画像</h2>
+                <input type="file" name="post[image_url]"  id="imageInput">
+                <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
                  <p class="image__error" style="color:red">{{ $errors->first('post.image_url') }}</p>
             </div>
             
@@ -88,6 +106,26 @@
                  <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
             </div>
         </div>
+        <script>
+          const imageInput = document.getElementById('imageInput');
+          const imagePreview = document.getElementById('imagePreview');
+        
+          imageInput.addEventListener('change', function () {
+            const file = imageInput.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+              };
+              reader.readAsDataURL(file);
+            } else {
+              imagePreview.src = '#';
+              imagePreview.style.display = 'none';
+            }
+          });
+        </script>
+
         </x-app-layout>
     </body>
 </html>
