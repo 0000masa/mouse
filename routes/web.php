@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts', [ArticleController::class, 'store']);
     Route::get('/searches', [SearchController::class, 'index']);
     Route::get('searches/do',[SearchController::class,'search']);
+    Route::get('/posts/{article}/edit', [ArticleController::class, 'edit']);
+    Route::put('/posts/{article}', [ArticleController::class, 'update']);
 });
+ 
 
 require __DIR__.'/auth.php';

@@ -21,11 +21,12 @@
         </h1>
         <div>
                 <img src="{{ $article->image_url }}" alt="画像が読み込めません。"/>
+                
         </div>
         <div>
            <p>
                評価<br>
-                {{ $article->evaluation->level }}
+                  {{ $article->evaluation->level }}
            </p>
        </div>
        <div>
@@ -85,6 +86,7 @@
         <div class="footer">
             <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
         </div>
+        
     </body>
     </x-app-layout>
 </html>
