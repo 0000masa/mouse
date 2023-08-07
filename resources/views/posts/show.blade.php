@@ -7,6 +7,7 @@
         <title>Posts</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+       
     </head>
     <x-app-layout>
     <body>
@@ -83,9 +84,59 @@
                 <p>{{ $article->explanation }}</p>    
             </div>
         </div>
+        @if($article->user_id != Auth::id())
+           <like :article_id="{{$article->id}}"></like>
+        @endif
         <div class="footer">
             <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
         </div>
+        
+        <template>
+             <div>
+            1  <button v-if="status == false" type="button" @click.prevent="like" class="btn btn-outline-warning">Like</button>
+               <button v-else type="button" @click.prevent="like" class="btn btn-warning">Liked</button>
+             </div>
+        </template>
+            
+            <script>
+            export default {
+             props: ['article_id'],      
+             data() {
+               return {
+                 status: false,
+               }
+             },
+             created() {
+               this.like_check()      2
+             },
+             methods: {
+               like_check() {
+                 const id = this.article_id
+                 const array = ["/posts/",id,"/check"];
+                 const path = array.join('')
+                 axios.get(path).then(res => {
+                   if(res.data == 1) {
+                     this.status = true
+                   } else {
+                     this.status = false
+                   }
+                 }).catch(function(err) {
+                   console.log(err)
+                 })
+               },
+               like() {                         3
+                 const id = this.article_id
+                 const array = ["/posts/",id,"/likes"];
+                 const path = array.join('')
+                 axios.post(path).then(res => {
+                   this.like_check()
+                 }).catch(function(err) {
+                   console.log(err)
+                 })
+               }
+             }
+            }
+            </script>
         
     </body>
     </x-app-layout>
