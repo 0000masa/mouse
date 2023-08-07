@@ -15,27 +15,27 @@
             @csrf
             <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
             <div class="product">
-                <h2>マウス名</h2>
+                <h2>マウス名(必須)</h2>
                 <input type="text" name=post[product]  value="{{ old('post.product') }}"/>
                 <p class="product__error" style="color:red">{{ $errors->first('post.product') }}</p>
             </div>
             <div class="price">
-                <h2>金額</h2>
+                <h2>金額(必須)</h2>
                 <input type="number" name=post[price]  value="{{ old('post.price') }}"/>
                 <p class="price__error" style="color:red">{{ $errors->first('post.price') }}</p>
             </div>
             <div class="weight">
-                <h2>重さ</h2>
+                <h2>重さ(必須)</h2>
                 <input type="number" name=post[weight]  value="{{ old('post.weight') }}"/>
                 <p class="weight__error" style="color:red">{{ $errors->first('post.weight') }}</p>
             </div>
             <div class="maximum_dpi">
-                <h2>最大DPI</h2>
+                <h2>最大DPI(任意)</h2>
                 <input type="number" name=post[maximum_dpi]  value="{{ old('post.maximum_dpi') }}"/>
                 <p class="maximum_dpi__error" style="color:red">{{ $errors->first('post.maximum_dpi') }}</p>
             </div>
              <div class="buttons">
-                <h2>ボタン数(左右クリックとホイールボタンの3つを含む)</h2>
+                <h2>ボタン数(左右クリックとホイールボタンの3つを含む (任意))</h2>
                 <input type="number" name=post[buttons]  value="{{ old('post.buttons') }}"/>
                 <p class="buttons__error" style="color:red">{{ $errors->first('post.buttons') }}</p>
             </div>
@@ -89,12 +89,12 @@
             </div>
             
             <div class="explanation">
-                <h2>説明</h2>
+                <h2>説明(必須)</h2>
                 <textarea name="post[explanation]" >{{ old('post.explanation') }}</textarea>
                 <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
             </div>
             <div class="image">
-                <h2>画像</h2>
+                <h2>画像(任意)</h2>
                 <input type="file" name="post[image_url]"  id="imageInput">
                 <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
                  <p class="image__error" style="color:red">{{ $errors->first('post.image_url') }}</p>

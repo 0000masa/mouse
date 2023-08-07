@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('searches/do',[SearchController::class,'search']);
     Route::get('/posts/{article}/edit', [ArticleController::class, 'edit']);
     Route::put('/posts/{article}', [ArticleController::class, 'update']);
+    Route::delete('/posts/{article}', [ArticleController::class,'delete']);
+    Route::get('/posts/{article}/check', [LikeController::class, 'check'])->name('like.check');
+    Route::resource('posts.likes', LikeController::class)->only(['store']);
 });
  
 

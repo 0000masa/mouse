@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
+    use SoftDeletes;
     use HasFactory;
     
     protected $fillable = [
@@ -53,5 +55,10 @@ class Article extends Model
     public function evaluation()
     {
         return $this->belongsTo(Evaluation::class);
+    }
+    
+    public function isLiked($user_id)
+    {
+      return $this->likes()->where('user_id', $user_id)->exists();
     }
 }
