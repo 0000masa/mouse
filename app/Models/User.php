@@ -47,6 +47,16 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);  
     }
     
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    
+      public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    
     public function getByUser(int $limit_count = 10)
     {
          return $this->articles()->with('user')->orderBy('updated_at', 'DESC')->paginate($limit_count);

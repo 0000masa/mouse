@@ -57,8 +57,19 @@ class Article extends Model
         return $this->belongsTo(Evaluation::class);
     }
     
-    public function isLiked($user_id)
+    public function comments()
     {
-      return $this->likes()->where('user_id', $user_id)->exists();
+        return $this->hasMany(Comment::class);
+    }
+    
+     public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    
+    
+    
+    public function isLikedBy($user): bool {
+        return Like::where('user_id', $user->id)->where('article_id', $this->id)->first() !==null;
     }
 }

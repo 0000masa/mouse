@@ -8,6 +8,7 @@ use App\Models\Manufacture;
 use App\Models\Connection;
 use App\Models\Battery;
 use App\Models\Evaluation;
+use App\Models\Comment;
 use App\Http\Requests\PostRequest;
 use Cloudinary; 
 
@@ -21,7 +22,15 @@ class ArticleController extends Controller
     
     public function show(Article $article)
     {
-        return view('posts.show')->with(['article' => $article]);
+        //ここからとreturnに$paramを追記
+        $reviews = Article::withCount('likes')->orderBy('id', 'desc')->paginate(10);
+        $param = [
+            'reviews' => $reviews,
+        ];
+        //ここまで
+        return view('posts.show',$param)->with(['article' => $article]);
+       
+        
     
     }
     
@@ -111,5 +120,39 @@ class ArticleController extends Controller
     {
         $article->delete();
         return redirect('/');
+    }
+    
+    
+    
+    
+    public function like(Request $request)
+    {
+        $user_id = Auth::user()->id; //1.ログインユーザーのid取得
+        $article_id = $request->article_id; //2.投稿idの取得
+        $already_liked = Like::where('user_id', $user_id)->where('article_id', $article_id)->first(); //3.
+    
+        if (!$already_liked) { //もしこのユーザーがこの投稿にまだいいねしてなかったら
+            $like = new Like; //4.Likeクラスのインスタンスを作成
+            $like->article_id = $article_id; //Likeインスタンスにreview_id,user_idをセット
+            $like->user_id = $user_id;
+            $like->save();
+        } else { //もしこのユーザーがこの投稿に既にいいねしてたらdelete
+            Like::where('article_id', $article_id)->where('user_id', $user_id)->delete();
+        }
+        //5.この投稿の最新の総いいね数を取得
+        $review_likes_count = Review::withCount('likes')->findOrFail($article_id)->likes_count;
+        $param = [
+            'review_likes_count' => $review_likes_count,
+        ];
+        return response()->json($param); //6.JSONデータをjQueryに返す
+    }
+    
+    public function likeshow(Request $request)
+    {
+        $reviews = Article::withCount('likes')->orderBy('id', 'desc')->paginate(10);
+        $param = [
+            'reviews' => $reviews,
+        ];
+        return view('posts.show', $param);
     }
 }

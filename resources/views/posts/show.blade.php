@@ -7,16 +7,37 @@
         <title>Posts</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-       
+         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        
+        
+        
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <style>
+        .liked {
+             color: pink;
+        }
+        </style>
     </head>
-    <x-app-layout>
+    
+   
     <body>
+       <x-app-layout>
+         <x-slot name="header">
+             
+        </x-slot>
+  
+  
         <a href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
         @if (Auth::check() && $article->user_id === Auth::user()->id)
         <div class='edit'>
             <a href="/posts/{{$article->id}}/edit">編集</a>
         </div>
         @endif
+        
+        <div class="footer">
+            <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
+        </div>
+        
         <h1 class="product">
             {{$article->product}}
         </h1>
@@ -84,60 +105,114 @@
                 <p>{{ $article->explanation }}</p>    
             </div>
         </div>
-        @if($article->user_id != Auth::id())
-           <like :article_id="{{$article->id}}"></like>
-        @endif
-        <div class="footer">
-            <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
+        
+        <div class="comment">コメント一覧</div>
+         @php
+         $comments=$article->comments()->paginate(10);
+         @endphp
+             @foreach($comments as $comment)
+                        <div class='post'>
+                            <p>{{$comment->created_at}}</p>
+                            <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                            
+                            
+                            <p>{{$comment->comment}}</p>
+                            
+                        </div>
+            @endforeach
+            <form method="POST" action="/add">
+                @csrf
+                <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
+                <input type="hidden" name="post[article_id]" value="{{ $article->id }}">
+                <textarea name="post[comment]"></textarea>
+                <button type="submit">コメントする</button>
+                <p class="comment__error" style="color:red">{{ $errors->first('post.comment') }}</p>
+            </form>
         </div>
+       
+       
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+           
+        @auth
+          <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
+          @if (!$article->isLikedBy(Auth::user()))
+            <span class="likes">
+                <i class="fas fa-music like-toggle" data-review-id="{{ $article->id }}"></i>
+              <span class="like-counter">{{$article->likes_count}}</span>
+            </span><!-- /.likes -->
+          @else
+            <span class="likes">
+                <i class="fas fa-music heart like-toggle liked" data-review-id="{{ $article->id }}"></i>
+              <span class="like-counter">{{$article->likes_count}}</span>
+            </span><!-- /.likes -->
+          @endif
+        @endauth
+        @guest
+          <span class="likes">
+              <i class="fas fa-music heart"></i>
+            <span class="like-counter">{{$article->likes_count}}</span>
+          </span><!-- /.likes -->
+        @endguest
         
-        <template>
-             <div>
-            1  <button v-if="status == false" type="button" @click.prevent="like" class="btn btn-outline-warning">Like</button>
-               <button v-else type="button" @click.prevent="like" class="btn btn-warning">Liked</button>
-             </div>
-        </template>
-            
-            <script>
-            export default {
-             props: ['article_id'],      
-             data() {
-               return {
-                 status: false,
-               }
-             },
-             created() {
-               this.like_check()      2
-             },
-             methods: {
-               like_check() {
-                 const id = this.article_id
-                 const array = ["/posts/",id,"/check"];
-                 const path = array.join('')
-                 axios.get(path).then(res => {
-                   if(res.data == 1) {
-                     this.status = true
-                   } else {
-                     this.status = false
-                   }
-                 }).catch(function(err) {
-                   console.log(err)
-                 })
-               },
-               like() {                         3
-                 const id = this.article_id
-                 const array = ["/posts/",id,"/likes"];
-                 const path = array.join('')
-                 axios.post(path).then(res => {
-                   this.like_check()
-                 }).catch(function(err) {
-                   console.log(err)
-                 })
-               }
-             }
-            }
-            </script>
-        
+       
+        <script
+          src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous">
+        </script>
+        <script>
+            $(function () {
+          let like = $('.like-toggle'); //like-toggleのついたiタグを取得し代入。
+          let likeReviewId; //変数を宣言（なんでここで？）
+          like.on('click', function () { //onはイベントハンドラー
+            let $this = $(this); //this=イベントの発火した要素＝iタグを代入
+            likeReviewId = $this.data('review-id'); //iタグに仕込んだdata-review-idの値を取得
+            //ajax処理スタート
+            $.ajax({
+              headers: { //HTTPヘッダ情報をヘッダ名と値のマップで記述
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+              },  //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
+              url: '/like', //通信先アドレスで、このURLをあとでルートで設定します
+              method: 'POST', //HTTPメソッドの種別を指定します。1.9.0以前の場合はtype:を使用。
+              data: { //サーバーに送信するデータ
+                'article_id': likeReviewId //いいねされた投稿のidを送る
+              },
+            })
+            //通信成功した時の処理
+            .done(function (data) {
+              $this.toggleClass('liked'); //likedクラスのON/OFF切り替え。
+              $this.next('.like-counter').html(data.review_likes_count);
+            })
+            //通信失敗した時の処理
+            .fail(function () {
+              console.log('fail'); 
+            });
+          });
+          });
+        </script>
+       </x-app-layout>
     </body>
-    </x-app-layout>
+    
 </html>
