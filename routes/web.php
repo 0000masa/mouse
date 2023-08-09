@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,8 +37,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{article}/edit', [ArticleController::class, 'edit']);
     Route::put('/posts/{article}', [ArticleController::class, 'update']);
     Route::delete('/posts/{article}', [ArticleController::class,'delete']);
-    Route::get('/posts/{article}/check', [LikeController::class, 'check'])->name('like.check');
-    Route::resource('posts.likes', LikeController::class)->only(['store']);
+    Route::post('/add',[HomeController::class,'add']);
+    
+    
+   Route::post('/like', 'ArticleController@like')->name('reviews.like');
+
 });
  
 
