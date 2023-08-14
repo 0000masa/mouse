@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('posts/result/ajax/{articleId}',[HomeController::class,'getData']);
     
-    
-    Route::get('/users/{user_id}', [HomeController::class,'user']);
+     Route::post('/follow/{userId}', [ UserController::class, 'store']);
+   Route::post('/follow/{userId}/destroy', [ UserController::class, 'destroy']);
     
 });
  

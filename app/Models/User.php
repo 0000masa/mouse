@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
          return $this->articles()->with('user')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
+    
+    public function followers()
+    {
+       return $this->belongsToMany(self::class, "follows", "follower_user_id", "followee_user_id");
+    }
+    
+    public function follows()
+    {
+       return $this->belongsToMany(self::class, "follows", "followee_user_id", "follower_user_id");
+    }
 }

@@ -222,7 +222,7 @@
                                                         
                                                         @csrf
                                                         @method('DELETE')
-                                                    <button  type="button" class="delete-button" data-comment-id="${data.comments[i].id}">削除</button> 
+                                                    {{--<button  type="button" class="delete-button" data-comment-id="${data.comments[i].id}">削除</button>--}}
                                                 </form>
                                                 
                                             </div>
@@ -257,7 +257,7 @@
                         }
                     },
                     error:()=>{
-                        alert("ajaxが失敗しました");
+                        alert("ajaxが失���しました");
                     }
                 });
             } 
