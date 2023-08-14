@@ -37,11 +37,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{article}/edit', [ArticleController::class, 'edit']);
     Route::put('/posts/{article}', [ArticleController::class, 'update']);
     Route::delete('/posts/{article}', [ArticleController::class,'delete']);
-    Route::post('/add',[HomeController::class,'add']);
+    Route::post('/comment',[HomeController::class,'add']);
     
+    Route::get('/comment/{article}', [HomeController::class,'get']);
+    Route::delete('/comment/{comment}', [HomeController::class,'delete']);
     
-   Route::post('/like', 'ArticleController@like')->name('reviews.like');
+   Route::post('/like', [ArticleController::class,'like'])->name('reviews.like');
 
+    Route::get('posts/result/ajax/{articleId}',[HomeController::class,'getData']);
+    
+    
+    Route::get('/users/{user_id}', [HomeController::class,'user']);
+    
 });
  
 

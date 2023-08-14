@@ -107,8 +107,8 @@
                 <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
             </div>
             <div class="image">
-                <h2>画像(任意　注:画像に変更が無い場合でも画像を選択し直してください。)</h2>
-                <input type="file" name="post[image_url]"  id="imageInput">
+                <h2>画像は変更できません。</h2>
+                
                 <p>前の画像</p>
                 <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
                 @if ($article->image_url)

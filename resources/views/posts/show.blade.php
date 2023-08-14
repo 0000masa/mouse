@@ -23,7 +23,7 @@
     <body>
        <x-app-layout>
          <x-slot name="header">
-             
+            
         </x-slot>
   
   
@@ -107,20 +107,38 @@
         </div>
         
         <div class="comment">コメント一覧</div>
+        {{--
          @php
          $comments=$article->comments()->paginate(10);
          @endphp
+         @if($comments->isEmpty())
+            <p>コメントはありません</p>
+        @else
              @foreach($comments as $comment)
                         <div class='post'>
                             <p>{{$comment->created_at}}</p>
                             <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
-                            
-                            
                             <p>{{$comment->comment}}</p>
-                            
+                            <form action="/comment/{{ $comment->id }}" id="form_{{ $comment->id }}" method="post">
+                                <input type="hidden" name="article_id" value="{{ $article->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" onclick="deletePost({{ $comment->id }})">削除</button> 
+                            </form>
                         </div>
             @endforeach
-            <form method="POST" action="/add">
+        @endif
+        
+           
+         <div class='paginate'>
+                    {{ $comments->links() }}
+                </div>
+        --}}
+       
+        <div id="comment-data">
+            
+        </div>
+            <form id="comment-form" method="POST" action="/comment">
                 @csrf
                 <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
                 <input type="hidden" name="post[article_id]" value="{{ $article->id }}">
@@ -129,9 +147,200 @@
                 <p class="comment__error" style="color:red">{{ $errors->first('post.comment') }}</p>
             </form>
         </div>
+        
+         <a href="/comment/{{$article->id}}">すべてのコメントを見る</a>
+        
+        
+        {{--<script>
+             $(document).ready(function() {
+                $(".delete-button").on("click", function() {
+                    event.preventDefault(); //追加
+                    const commentId = $(this).data("comment-id");
+                    const deleteUrl = "/comment/" + commentId;
+                    const formData = { article_id: "{{ $article->id }}",
+                                        comment_id: commentId
+                                        };
+        
+                    // Ajaxリクエストを送信してコメントを削除
+                    $.ajax({
+                        url: deleteUrl,
+                        data: JSON.stringify({ post: formData }),
+                        type: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function(response) {
+                            get_data(articleId);
+                            // コメントの削除に成功した場合、対応するフォームを非表示にする
+                            $("#form_" + commentId).hide();
+                            // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用
+                            // location.reload();
+                        },
+                        error: function(xhr) {
+                            alert("コメントの削除に失敗しました");
+                        }
+                    });
+                });
+            });
+        </script>--}}
        
        
-      
+        
+        <script>
+        　const articleId = {{$article->id}};
+        　
+        　 
+        　
+           const get_data = (articleId) => {
+                $.ajax({
+                    url: "result/ajax/" +articleId,
+                    dataType: "json",
+                    success: data => {
+                        $("#comment-data")
+                            .find(".comment-visible")
+                            .remove();
+                             
+                        for (var i = 0; i < data.comments.length; i++) {
+                        
+                        
+                        
+                           
+                            const html = `
+                           
+                                        <div class="media comment-visible">
+                                    
+                                            
+                                            <div class="media-body comment-body">
+                                                <div class="row">
+                                                    
+                                                    <a href="/users/${data.comments[i].user_id}">${data.comments[i].name}</a>
+                                                    
+                                                </div>
+                                                <span class="comment-body-content" id="comment">${data.comments[i].comment}</span>
+                                                <form action="/comment/${data.comments[i].id}" id="form_${data.comments[i].id}" method="post">
+                                                    <input type="hidden" name="article_id" value="{{$article->id}}">
+                                                        
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    <button  type="button" class="delete-button" data-comment-id="${data.comments[i].id}">削除</button> 
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                        
+        
+                  
+                   
+                                    `;
+                        
+                       {{-- @foreach($comments as $comment)
+                        <div class='post'>
+                            <p>{{$comment->created_at}}</p>
+                            <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                            <p>{{$comment->comment}}</p>
+                            <form action="/comment/{{ $comment->id }}" id="form_{{ $comment->id }}" method="post">
+                                <input type="hidden" name="article_id" value="{{ $article->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" onclick="deletePost({{ $comment->id }})">削除</button> 
+                            </form>
+                        </div>
+            @endforeach--}}
+                       
+        
+                $("#comment-data").append(html);
+                      
+                    
+                           
+                        }
+                    },
+                    error:()=>{
+                        alert("ajaxが失敗しました");
+                    }
+                });
+            } 
+              document.addEventListener("DOMContentLoaded", () => {
+                get_data(articleId);
+            });
+            </script>
+            
+            
+            <script>
+        
+             $("#comment-form").submit(event => {
+            event.preventDefault(); // フォームの通常の送信をキャンセル
+             const commentContent = $("textarea[name='post[comment]']").val();
+            if (!commentContent.trim()) {
+                // コメントが空の場合はエラーメッセージを表示
+                alert("コメントを入力してください");
+                return;
+            }
+            const formData = {
+                comment: commentContent,
+                article_id: "{{ $article->id }}",
+                user_id:"{{ Auth::user()->id }}"
+            };
+            
+            $.ajax({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }, 
+                type: "POST",
+                url: "/comment",
+                data: JSON.stringify({ post: formData }),
+                contentType: "application/json",
+                dataType: "json",
+                success: () => {
+                    // コメント投稿成功後にコメントを取得して表示
+                    get_data(articleId);
+                    // コメントテキストエリアをクリア
+                    $("textarea[name='post[comment]']").val("");
+                },
+                error: () => {
+                    alert("コメントの投稿に失敗しました");
+                }
+            });
+            })
+             </script>
+            <script>
+             $(document).ready(function() {
+                $(".delete-button").on("click", function(event) {
+                    event.preventDefault(); //追加
+                    const commentId = $(this).data("comment-id");
+                    const deleteUrl = "/comment/" + commentId;
+                    const formData = { article_id: "{{ $article->id }}",
+                                        comment_id: commentId
+                                        };
+        
+                    // Ajaxリクエストを送信してコメントを削除
+                    $.ajax({
+                        url: deleteUrl,
+                        data:  formData ,
+                        type: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function(response) {
+                            get_data(articleId);
+                            // コメントの削除に成功した場合、対応するフォームを非表示にする
+                            $("#form_" + commentId).hide();
+                            // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用
+                            // location.reload();
+                        },
+                        error: function(xhr) {
+                            alert("コメントの削除に失敗しました");
+                        }
+                    });
+                });
+            });
+        </script>
+             
+             
+    
+            
+        
       
       
       
@@ -177,11 +386,7 @@
         @endguest
         
        
-        <script
-          src="https://code.jquery.com/jquery-3.6.0.min.js"
-          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-          crossorigin="anonymous">
-        </script>
+        
         <script>
             $(function () {
           let like = $('.like-toggle'); //like-toggleのついたiタグを取得し代入。
