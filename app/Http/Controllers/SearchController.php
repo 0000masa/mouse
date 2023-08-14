@@ -28,7 +28,7 @@ class SearchController extends Controller
          $battery = $request->input('battery'); 
          
          $query = Article::query();
-         
+         $query->select('articles.id','articles.product','articles.explanation','articles.user_id');//追記
              $query->join('manufactures', function ($query) use ($request) {
             $query->on('articles.manufacture_id', '=', 'manufactures.id');
             })->join('connections', function ($query) use ($request) {
@@ -38,6 +38,8 @@ class SearchController extends Controller
             })->join('batteries', function ($query) use ($request) {
             $query->on('articles.battery_id', '=', 'batteries.id');
             });
+            
+            
     
         if(!empty($manufacture)) {
             $query->where('manufacture_id', 'LIKE', $manufacture);
@@ -51,6 +53,10 @@ class SearchController extends Controller
             $query->where('battery_id', 'LIKE', $battery);
         }
         
+         if(!empty($evaluation)) {
+            $query->where('evaluation_id', 'LIKE', $evaluation);
+        }
+        
         if(!empty($product)) {
             $query->where('product', 'LIKE', "%{$product}%");
         }
@@ -62,6 +68,6 @@ class SearchController extends Controller
        
        
        
-         return view('searches/result', ['items' => $items ,'article'=>$article]);
+         return view('searches/result')->with( ['items' => $items ,'article'=>$article]);
      }
 }

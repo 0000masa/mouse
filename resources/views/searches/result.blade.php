@@ -5,29 +5,26 @@
         </x-slot>
             <h1>検索結果一覧</h1>
                 <div class='result'>
-                  @php
-                        $selectedIds = [];
-                @endphp
-                @foreach($items as $item)
-                    @php
-                    
-                    $articleId=$article->whereNotIn('id', $selectedIds)->where('product', $item->product)->first()->id;
+                @if($items->isEmpty())
+                    <p>検索結果はありません。</p>
+                @else
                   
+                @foreach($items as $item)
+                   
+                    @php
+                   $username = App\Models\User::where('id', $item->user_id)->first();
                     @endphp
-              
                         <div class='result'>
-                            <a href="/users/{{ $item->user->id }}">{{ $item->user->name }}</a>
-                             <a href="/posts/{{$articleId}}"><h2 class='product'>{{$item->product}}</h2></a>
+                        
+                            <a href="/users/{{ $item->user_id }}">{{ $username->name }}</a>
+                             <a href="/posts/{{$item->id}}"><h2 class='product'>{{$item->product}}</h2></a>
                             
                             <p class='explanation'>{{$item->explanation}}</p>
                             
                         </div>
-                    @php
-                    $selectedIds[]=$articleId
-                    
-                    @endphp
+                   
                 @endforeach
-             
+             　@endif
                 </div>
                <div class='paginate'>
                     {{ $items->links() }}
