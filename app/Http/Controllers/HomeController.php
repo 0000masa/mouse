@@ -66,21 +66,14 @@ class HomeController extends Controller
     
     public function get(Article $article,Comment $comment)
     {
-        $comments=$comment->where('article_id','=',$article->id)->orderBy('created_at','desc')->paginate(30);
+        $comments=$comment->where('article_id','=',$article->id)->orderBy('created_at','desc')->paginate(20);
        
         
         return view('posts.comment')->with(['comments' => $comments]); 
     }
     
 
-    public function user($user_id)
-    {
-        $user = User::find($user_id);
-        
-        
-            return response()->json($user); // ユーザーデータをJSONで返す
-       
-    }
+   
 
     
 }
