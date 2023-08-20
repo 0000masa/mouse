@@ -14,6 +14,8 @@
         </x-slot>
         <div>
         ユーザー名:{{$user->name}}</br>
+        <a href="/follow/follows/{{$articles[0]->user->id}}"><p>{{ $user->follows()->count();}}フォロー</a>　<a href="/follow/followers/{{$articles[0]->user->id}}">{{ $user->followers()->count();}}フォロワー</a> </br></p>
+        
         @if(Auth::check() && Auth::user()->id !== $user->id)
             @if(Auth::user()->follows->contains($user->id))
             <button onclick="follow({{ $user->id }})"><span id="follow-status-{{ $user->id }}">フォロー中</span></button>

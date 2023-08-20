@@ -40,14 +40,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/comment',[HomeController::class,'add']);
     
     Route::get('/comment/{article}', [HomeController::class,'get']);
-    Route::delete('/comment/{comment}', [HomeController::class,'delete']);
-    
+    Route::delete('/comment/{comment}', [HomeController::class,'destroy']);
+    Route::delete('/destroy/{id}', [HomeController::class,'commentdestroy']);//削除の非同期
+     
    Route::post('/like', [ArticleController::class,'like'])->name('reviews.like');
+   Route::post('/like/count', [ArticleController::class,'likecount'])->name('reviews.likecount');
 
     Route::get('posts/result/ajax/{articleId}',[HomeController::class,'getData']);
     
-     Route::post('/follow/{userId}', [ UserController::class, 'store']);
-   Route::post('/follow/{userId}/destroy', [ UserController::class, 'destroy']);
+    Route::get('/follow/{user}', [ UserController::class, 'followindex']);
+    Route::get('/follow/follows/{user}', [ UserController::class, 'followsname']);
+    Route::get('/follow/followers/{user}', [ UserController::class, 'followersname']);
+    Route::post('/follow/{userId}', [ UserController::class, 'store']);
+    Route::post('/follow/{userId}/destroy', [ UserController::class, 'destroy']);
     
 });
  

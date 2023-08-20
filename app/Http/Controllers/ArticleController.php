@@ -33,7 +33,9 @@ class ArticleController extends Controller
         ];
         //ここまで
         
-        return view('posts.show',$param)->with(['article' => $article,'users' =>$user->get()]);
+         $comments=$comment->where('article_id','=',$article->id)->orderBy('created_at','Asc')->paginate(10);
+        
+        return view('posts.show',$param)->with(['article' => $article,'users' =>$user->get(),'comments' => $comments]);
        
         
     
@@ -152,12 +154,27 @@ class ArticleController extends Controller
         return response()->json($param); //6.JSONデータをjQueryに返す
     }
     
-    public function likeshow(Request $request)
+    
+    public function likecount(Request $request)
     {
-        $reviews = Article::withCount('likes')->orderBy('id', 'desc')->paginate(10);
+       //1.ログインユーザーのid取得
+        $article_id = $request->article_id; //2.投稿idの取得
+        
+    
+        
+        //5.この投稿の最新の総いいね数を取得
+        $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;
         $param = [
-            'reviews' => $reviews,
+            'review_likes_count' => $review_likes_count,
         ];
-        return view('posts.show', $param);
+        return response()->json($param); //6.JSONデータをjQueryに返す
     }
+    //public function likeshow(Request $request)
+    //{
+        //$reviews = Article::withCount('likes')->orderBy('id', 'desc')->paginate(10);
+        //$param = [
+            //'reviews' => $reviews,
+        //];
+        //return view('posts.show', $param);
+    //}
 }

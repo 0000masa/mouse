@@ -29,13 +29,17 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                         <p>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></br>
-                         <a href="/searches">マウス検索</a></p>
-                         <a href="/posts/create">新規投稿作成</a>
+                <header class="bg-blue-400 p-4">
+                  <nav class="flex justify-between mx-auto container items-center">
+                    <div>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></div>
+                    <div class="space-x-12 font-bold">
+                         
+                         <a href="/searches" class="hover:text-green-200 transition-all duration-300">マウス検索</a>
+                         <a href="/posts/create" class="hover:text-green-200 transition-all duration-300">新規投稿作成</a>
+                         <a href="/follow/{{Auth::user()->id}}" class="hover:text-green-200 transition-all duration-300">フォローした人の投稿</a>
                         {{ $header }}
                     </div>
+                  </nav>
                 </header>
             @endif
 
