@@ -38,7 +38,7 @@ class HomeController extends Controller
             $query->on('comments.user_id', '=', 'users.id');
             });
         $query->where('article_id', '=', $articleId);
-        $query->orderBy('comments.created_at', 'desc');
+        $query->orderBy('comments.created_at', 'Asc');
         $comments = $query->paginate(10);
         //$comments= Comment::where('article_id', $articleId)->paginate(10);
         //$comments = Comment::orderBy('created_at','desc')->get();
@@ -54,14 +54,15 @@ class HomeController extends Controller
     }
     //ここまで追加
     
-    public function delete(Comment $comment,Request $request)
+    public function destroy(Comment $comment,Request $request)
     {
         $article_id=$request['article_id'];
         
         $comment->delete();
         //$articleId=$request['post.article_id'];
-        //return response()->json($articleId);
-        return redirect('/comment/'.$article_id);
+        return response()->json($article_id);
+        //return redirect('/comment/'.$article_id);
+        
     }
     
     public function get(Article $article,Comment $comment)
@@ -70,6 +71,17 @@ class HomeController extends Controller
        
         
         return view('posts.comment')->with(['comments' => $comments]); 
+    }
+    
+    public function commentdestroy(Request $request, Comment $comment) {
+
+
+     
+            $comment = Comment::findOrFail($request->id);
+
+            $comment->delete();
+
+
     }
     
 

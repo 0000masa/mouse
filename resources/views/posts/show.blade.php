@@ -111,6 +111,7 @@
          @php
          $comments=$article->comments()->paginate(10);
          @endphp
+         <div class=commentarea>
          @if($comments->isEmpty())
             <p>コメントはありません</p>
         @else
@@ -125,18 +126,36 @@
                                 @method('DELETE')
                                 <button type="button" onclick="deletePost({{ $comment->id }})">削除</button> 
                             </form>
+                             <form>
+                                <input type="submit" data-comment_id="{{ $comment->id }}" class="btn btn-danger btn-del" value="削除">
+                            </form>
                         </div>
             @endforeach
         @endif
         
            
          <div class='paginate'>
-                    {{ $comments->links() }}
-                </div>
-        --}}
-       
+            {{ $comments->links() }}
+        </div>
+        </div>--}}
+        
+      
         <div id="comment-data">
             
+        {{--
+        @php
+            $count = 1;
+        @endphp--}}
+        
+        @foreach($comments as $comment)
+            <form>
+                <input type="submit" data-comment-id="{{ $comment->id }}" class="delete-button" value="削除">
+            </form>
+           {{-- @php
+                $count++;
+            @endphp--}}
+        @endforeach
+        
         </div>
             <form id="comment-form" method="POST" action="/comment">
                 @csrf
@@ -151,44 +170,15 @@
          <a href="/comment/{{$article->id}}">すべてのコメントを見る</a>
         
         
-        {{--<script>
-             $(document).ready(function() {
-                $(".delete-button").on("click", function() {
-                    event.preventDefault(); //追加
-                    const commentId = $(this).data("comment-id");
-                    const deleteUrl = "/comment/" + commentId;
-                    const formData = { article_id: "{{ $article->id }}",
-                                        comment_id: commentId
-                                        };
-        
-                    // Ajaxリクエストを送信してコメントを削除
-                    $.ajax({
-                        url: deleteUrl,
-                        data: JSON.stringify({ post: formData }),
-                        type: "DELETE",
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                        },
-                        success: function(response) {
-                            get_data(articleId);
-                            // コメントの削除に成功した場合、対応するフォームを非表示にする
-                            $("#form_" + commentId).hide();
-                            // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用
-                            // location.reload();
-                        },
-                        error: function(xhr) {
-                            alert("コメントの削除に失敗しました");
-                        }
-                    });
-                });
-            });
-        </script>--}}
+       
        
        
         
         <script>
+       
+        
         　const articleId = {{$article->id}};
-        　
+        
         　 
         　
            const get_data = (articleId) => {
@@ -199,13 +189,14 @@
                         $("#comment-data")
                             .find(".comment-visible")
                             .remove();
+                            
                              
                         for (var i = 0; i < data.comments.length; i++) {
                         
                         
                         
                            
-                            const html = `
+                            let html = `
                            
                                         <div class="media comment-visible">
                                     
@@ -217,13 +208,21 @@
                                                     
                                                 </div>
                                                 <span class="comment-body-content" id="comment">${data.comments[i].comment}</span>
-                                                <form action="/comment/${data.comments[i].id}" id="form_${data.comments[i].id}" method="post">
+                                                ${data.comments[i].id}
+                                                
+                                                {{--<form action="/comment/destroy/${data.comments[i].id}" id="form_${data.comments[i].id}" method="post">
                                                     <input type="hidden" name="article_id" value="{{$article->id}}">
                                                         
                                                         @csrf
                                                         @method('DELETE')
-                                                    {{--<button  type="button" class="delete-button" data-comment-id="${data.comments[i].id}">削除</button>--}}
-                                                </form>
+                                                <button class="delete-button" data-comment-id="${data.comments[i].id}">削除</button>
+                                                
+                                                </form>--}}
+                                                
+                                                {{--<form >
+                                                <input type="submit" data-comment_id="${data.comments[i].id}" class="btn btn-danger btn-del" value="削除">
+                                                
+                                                </form>--}}
                                                 
                                             </div>
                                         </div>
@@ -250,8 +249,8 @@
             @endforeach--}}
                        
         
-                $("#comment-data").append(html);
-                      
+                 $("#comment-data").append(html);
+                {{--$(`#comment-data${i}`).append(html);--}}      
                     
                            
                         }
@@ -266,8 +265,90 @@
             });
             </script>
             
-            
             <script>
+             $(document).ready(function() {
+                $(".delete-button").click({{--"click"--}} function(event) {
+                    console.log('test')
+                    {{--event.preventDefault(); //追加--}}
+                    const commentId = $(this).data("comment-id");
+                    const deleteUrl = `/comment/${commentId}`;
+                    const articleId = "{{ $article->id }}"
+                    const formData = { article_id: "{{ $article->id }}",
+                                        comment_id: commentId
+                                        };
+        
+                    // Ajaxリクエストを送信してコメントを削除
+                    $.ajax({
+                        url: deleteUrl,
+                        data: JSON.stringify({ post: formData }),
+                        type: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function(response) {
+                            get_data(article_id);
+                            // コメントの削除に成功した場合、対応するフォームを非表示にする
+                            //$("#form_" + commentId).hide();
+                            // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用
+                        　　//location.reload();
+                        },
+                        error: function(xhr) {
+                            alert("コメントの削除に失敗しました");
+                        }
+                    });
+                });
+            });
+        
+            
+            $(function() {
+              
+                          $('.btn-danger').on('click', function() {
+                            
+           
+                                
+                                  var clickEle = $(this)
+           
+            
+                                  var commentID = clickEle.attr('data-comment_id');
+                                  var articleId = "{{ $article->id }}";  
+                                     
+                          $.ajax({
+                             type: 'POST',
+                             url: '/destroy/'+commentID, 
+                             dataType: 'json',
+                             data: {'id':commentID},
+                                      
+                            success: function() {
+                    
+                            
+                                get_data(articleId);
+                                
+                                
+                            },
+                            error: function() {
+                                alert("失敗しました");
+                            }
+            
+                        });
+                        
+                  });
+            });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
              $("#comment-form").submit(event => {
             event.preventDefault(); // フォームの通常の送信をキャンセル
@@ -295,6 +376,8 @@
                 success: () => {
                     // コメント投稿成功後にコメントを取得して表示
                     get_data(articleId);
+                    
+                   
                     // コメントテキストエリアをクリア
                     $("textarea[name='post[comment]']").val("");
                 },
@@ -303,39 +386,11 @@
                 }
             });
             })
-             </script>
-            <script>
-             $(document).ready(function() {
-                $(".delete-button").on("click", function(event) {
-                    event.preventDefault(); //追加
-                    const commentId = $(this).data("comment-id");
-                    const deleteUrl = "/comment/" + commentId;
-                    const formData = { article_id: "{{ $article->id }}",
-                                        comment_id: commentId
-                                        };
-        
-                    // Ajaxリクエストを送信してコメントを削除
-                    $.ajax({
-                        url: deleteUrl,
-                        data:  formData ,
-                        type: "DELETE",
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                        },
-                        success: function(response) {
-                            get_data(articleId);
-                            // コメントの削除に成功した場合、対応するフォームを非表示にする
-                            $("#form_" + commentId).hide();
-                            // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用
-                            // location.reload();
-                        },
-                        error: function(xhr) {
-                            alert("コメントの削除に失敗しました");
-                        }
-                    });
-                });
-            });
-        </script>
+            
+           
+            </script>
+            
+       
              
              
     
@@ -368,19 +423,19 @@
           <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
           @if (!$article->isLikedBy(Auth::user()))
             <span class="likes">
-                <i class="fas fa-music like-toggle" data-review-id="{{ $article->id }}"></i>
+                <i class="fas fa-heart like-toggle" data-review-id="{{ $article->id }}"></i>
               <span class="like-counter">{{$article->likes_count}}</span>
             </span><!-- /.likes -->
           @else
             <span class="likes">
-                <i class="fas fa-music heart like-toggle liked" data-review-id="{{ $article->id }}"></i>
+                <i class="fas fa-heart heart like-toggle liked" data-review-id="{{ $article->id }}"></i>
               <span class="like-counter">{{$article->likes_count}}</span>
             </span><!-- /.likes -->
           @endif
         @endauth
         @guest
           <span class="likes">
-              <i class="fas fa-music heart"></i>
+              <i class="fas fa-heart heart"></i>
             <span class="like-counter">{{$article->likes_count}}</span>
           </span><!-- /.likes -->
         @endguest
@@ -416,6 +471,32 @@
             });
           });
           });
+          
+          
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            let likeReviewId={{$article->id}};
+                $.ajax({
+              headers: { 
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+              },  
+              url: '/like/count', 
+              method: 'POST', 
+              data: { 
+                'article_id': likeReviewId //投稿のidを送る
+              },
+            })
+            .done(function (data) {
+              
+               document.querySelector('.like-counter').innerHTML = data.review_likes_count;
+            })
+            
+            .fail(function () {
+              console.log('fail'); 
+            });
+            });
+            
         </script>
        </x-app-layout>
     </body>
