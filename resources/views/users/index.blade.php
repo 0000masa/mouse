@@ -14,7 +14,8 @@
         </x-slot>
         <div>
         ユーザー名:{{$user->name}}</br>
-        <a href="/follow/follows/{{$articles[0]->user->id}}"><p>{{ $user->follows()->count();}}フォロー</a>　<a href="/follow/followers/{{$articles[0]->user->id}}">{{ $user->followers()->count();}}フォロワー</a> </br></p>
+        <p><a href="/follow/follows/{{$articles[0]->user->id}}">{{ $user->follows()->count();}}フォロー</a></p> 　
+        <p id="follower-count-{{ $user->id }}"><a href="/follow/followers/{{$articles[0]->user->id}}">{{ $user->followers()->count();}}フォロワー</a></p></br>
         
         @if(Auth::check() && Auth::user()->id !== $user->id)
             @if(Auth::user()->follows->contains($user->id))
@@ -71,6 +72,7 @@
                         {{--$(button).text("フォロー中");--}}
                           
                         $(`#follow-status-${userId}`).text("フォロー中");
+                        updateFollowerCount(userId)
                         
                     })
                     .fail((data) => {
@@ -89,6 +91,7 @@
                         {{--$(button).text("フォロー中");--}}
                           
                         $(`#follow-status-${userId}`).text("フォローする");
+                        updateFollowerCount(userId)
                         
                     })
                     .fail((data) => {
@@ -96,8 +99,26 @@
                     });
                   }
                 
-            
+                
+                
+                
+                
+                function updateFollowerCount(userId) {
+                $.ajax({
+                    headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
+                    url: `/follower/count/${userId}`,
+                    type: "POST",
+                })
+                .done((data) => {
+                    $(`#follower-count-${userId}`).text(`${data.follower_count}フォロワー`);
+                })
+                .fail((data) => {
+                    console.log(data);
+                });
+            }
                 </script>
+                
+                
     </body>
     
 </html>

@@ -30,6 +30,8 @@
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-blue-400 p-4">
+                    
+                    
                   <nav class="flex justify-between mx-auto container items-center">
                     <div>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></div>
                     <div class="space-x-12 font-bold">
