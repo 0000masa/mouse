@@ -51,4 +51,15 @@ class UserController extends Controller
         
         return view('users.followername')->with(['followerusers'=>$followerusers]);
      }
+     
+      public function updatefollowcount($userId)
+    {
+            $user = User::find($userId);
+            $followerCount = $user->followers()->count();
+            return response()->json(['follower_count' => $followerCount]);
+       
+        
+    }
+    
+     
 }

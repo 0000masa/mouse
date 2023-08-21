@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/follow/followers/{user}', [ UserController::class, 'followersname']);
     Route::post('/follow/{userId}', [ UserController::class, 'store']);
     Route::post('/follow/{userId}/destroy', [ UserController::class, 'destroy']);
+    Route::post('/follower/count/{userId}/', [ UserController::class, 'updatefollowcount']);
     
 });
  
