@@ -11,7 +11,9 @@
          <x-slot name="header">
              
         </x-slot>
+        <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a></br> 
             <h1>フォローしてるユーザー</h1>
+               
                 <div class='posts'>
                     @foreach($followusers as $followuser)
                         <div class='post'>

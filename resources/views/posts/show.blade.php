@@ -34,9 +34,9 @@
         </div>
         @endif
         
-        <div class="footer">
+        {{--<div class="footer">
             <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
-        </div>
+        </div>--}}
         
         <h1 class="product">
             {{$article->product}}
@@ -147,14 +147,15 @@
             $count = 1;
         @endphp--}}
         
-        @foreach($comments as $comment)
+        {{--@foreach($comments as $comment)
             <form>
                 <input type="submit" data-comment-id="{{ $comment->id }}" class="delete-button" value="削除">
             </form>
-           {{-- @php
+           @php
                 $count++;
-            @endphp--}}
-        @endforeach
+            @endphp
+        @endforeach--}}
+        
         
         </div>
             <form id="comment-form" method="POST" action="/comment">
@@ -208,7 +209,7 @@
                                                     
                                                 </div>
                                                 <span class="comment-body-content" id="comment">${data.comments[i].comment}</span>
-                                                ${data.comments[i].id}
+                                               
                                                 
                                                 {{--<form action="/comment/destroy/${data.comments[i].id}" id="form_${data.comments[i].id}" method="post">
                                                     <input type="hidden" name="article_id" value="{{$article->id}}">
@@ -285,8 +286,8 @@
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                         },
-                        success: function(response) {
-                            get_data(article_id);
+                        success:()=>{
+                            get_data(articleId);
                             // コメントの削除に成功した場合、対応するフォームを非表示にする
                             //$("#form_" + commentId).hide();
                             // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用

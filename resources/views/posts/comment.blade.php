@@ -2,6 +2,8 @@
          <x-slot name="header">
              
         </x-slot>
+        
+         <a href="/posts/{{$article->id}}" class="btn btn-primary">戻る</a></br>
         全てのコメント
          @foreach($comments as $comment)
                         <div class='post'>
