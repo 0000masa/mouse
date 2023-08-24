@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/users/{user}', [UserController::class,'index']);
+    Route::get('/users/{user}', [UserController::class,'index'])->name('users.index');
     
     Route::get('/posts/create', [ArticleController::class, 'create']);
     Route::get('/posts/{article}', [ArticleController::class ,'show']);
@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/follow/{userId}', [ UserController::class, 'store']);
     Route::post('/follow/{userId}/destroy', [ UserController::class, 'destroy']);
     Route::post('/follower/count/{userId}/', [ UserController::class, 'updatefollowcount']);
+    
+    Route::get('/usersearches', [SearchController::class, 'userindex']);
+    Route::get('/usersearches/do', [SearchController::class, 'usersearch']);
     
 });
  

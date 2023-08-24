@@ -8,18 +8,19 @@ use App\Models\Manufacture;
 use App\Models\Connection;
 use App\Models\Battery;
 use App\Models\Evaluation;
+use App\Models\User;
 use App\Http\Requests\PostRequest;
 
 class SearchController extends Controller
 {
-     public function index(Request $request,Manufacture $manufacture,Connection $connection,Battery $battery,Evaluation $evaluation)
+     public function index(Manufacture $manufacture,Connection $connection,Battery $battery,Evaluation $evaluation)
      {
-         $product = $request->input('product');
+         //$product = $request->input('product');,'product'=>$product
         
-         return view('searches.index')->with(['manufactures' => $manufacture->get(),'connections' => $connection->get(),'batteries' => $battery->get(),'evaluations' => $evaluation->get(),'product'=>$product]);
+         return view('searches.index')->with(['manufactures' => $manufacture->get(),'connections' => $connection->get(),'batteries' => $battery->get(),'evaluations' => $evaluation->get()]);
      }
      
-     public function search(Request $request,Article $article)
+     public function search(Request $request)
      {
          $product = $request->input('product');
          $manufacture = $request->input('manufacture');
@@ -68,6 +69,40 @@ class SearchController extends Controller
        
        
        
-         return view('searches/result')->with( ['items' => $items ,'article'=>$article]);
+         return view('searches/result')->with( ['items' => $items ]);
+     }
+     
+     public function userindex()
+     {
+         
+        
+         return view('searches.userindex');
+     }
+     
+      public function usersearch(Request $request)
+     {
+         $name = $request->input('user');
+          
+         
+         $query = User::query();
+         $query->select('users.id','users.name');
+            
+            
+            
+    
+      
+        
+        if(!empty($name)) {
+            $query->where('name', 'LIKE', "%{$name}%");
+        }
+        
+        
+        $items = $query->paginate(10);
+       //$product = $items['product'];
+       //$items = $article->where('product', '=', $product)->paginate();
+       
+       
+       
+         return view('searches/userresult')->with( ['items' => $items ]);
      }
 }

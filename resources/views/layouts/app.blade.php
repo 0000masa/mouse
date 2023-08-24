@@ -22,29 +22,44 @@
         <!--ここまで追加-->
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="font-sans antialiased">
+        
+
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            {{--@include('layouts.navigation')--}}
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-blue-400 p-4">
+            <header class="text-gray-600 body-font">
+                
+            @include('layouts.navigation')
+                
+                    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+                   
                     
-                    
-                  <nav class="flex justify-between mx-auto container items-center">
-                    <div>ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a></div>
-                    <div class="space-x-12 font-bold">
-                         
-                         <a href="/searches" class="hover:text-green-200 transition-all duration-300">マウス検索</a>
-                         <a href="/posts/create" class="hover:text-green-200 transition-all duration-300">新規投稿作成</a>
-                         <a href="/follow/{{Auth::user()->id}}" class="hover:text-green-200 transition-all duration-300">フォローした人の投稿</a>
-                        {{ $header }}
-                    </div>
-                  </nav>
-                </header>
+                      <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                        
+                        
+                             
+                             <a href="/searches" class="mr-5 hover:text-gray-900">マウス検索</a>
+                             <a href="/usersearches" class="mr-5 hover:text-gray-900">ユーザー検索</a>
+                             <a href="/posts/create" class="mr-5 hover:text-gray-900">新規投稿作成</a>
+                             <a href="/follow/{{Auth::user()->id}}" class="mr-5 hover:text-gray-900">フォローした人の投稿</a>
+                            {{ $header }}
+                       
+                      </nav>
+                  
+                      </div>
+                       {{--<div>
+                            ログインユーザー:<a href="/users/{{ Auth::id() }}">{{ Auth::user()->name }}</a>
+                        </div>--}}
+                  
+            </header>    
             @endif
-
+           
             <!-- Page Content -->
             <main>
                 {{ $slot }}

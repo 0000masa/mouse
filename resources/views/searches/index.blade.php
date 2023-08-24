@@ -8,6 +8,9 @@
     </head>
     <body>
         <x-app-layout>
+            <x-slot name="header">
+        
+            </x-slot>
         
             <form action="/searches/do" method="GET">
             @csrf
@@ -16,7 +19,8 @@
                 <div>
                     <label for="">マウス名
                     <div>
-                        <input type="text" name="product" value="{{ $product }}">
+                        <input type="text" name="product" value="{{-- $product --}}">
+                        
                     </div>
                     </label>
                 </div>

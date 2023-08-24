@@ -11,23 +11,38 @@
          <x-slot name="header">
              
         </x-slot>
-            <h1>投稿一覧</h1>
-                <div class='posts'>
-                    @foreach($articles as $article)
-                        <div class='post'>
-                            <a href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
-                             <a href="/posts/{{ $article->id }}"><h2 class='product'>{{$article->product}}</h2></a>
+        <div class="bg-white py-6 sm:py-8 lg:py-12">
+            <div class="mx-auto max-w-screen-md px-4 md:px-8">
+                <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl xl:mb-12">投稿一覧</h2>
+                    <div class="mb-4 flex items-center justify-between border-t border-b py-4">
+                        <div class="divide-y">
                             
-                            <p class='explanation'>{{$article->explanation}}</p>
-                            
-                        </div>
-                    @endforeach
+                                @foreach($articles as $article)
+                                <div class="flex flex-col gap-3 py-4 md:py-8">
+                                    <div class="block font-bold">
+                                        <a class="block text-base font-bold" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                         <a class="block text-base font-bold" href="/posts/{{ $article->id }}"><h2 class='product'>{{$article->product}}</h2></a>
+                                        
+                                        <p class='text-gray-600'>{{$article->explanation}}</p>
+                                        
+                                    </div>
+                                </div>
+                                @endforeach
               
-                </div>
-               <div class='paginate'>
-                    {{ $articles->links() }}
-                </div>
+                            
+                           
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class='paginate'>
+            {{ $articles->links() }}
+        </div>
+        
+        
+
                 
-                </x-app-layout>
+        </x-app-layout>
     </body>
 </html>
+

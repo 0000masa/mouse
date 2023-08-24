@@ -1,7 +1,9 @@
  <x-app-layout>
+     
      <x-slot name="header">
          
      </x-slot>
+     @if (Auth::check() && $article->user_id === Auth::user()->id)
      編集画面      
      <form action="/posts/{{ $article->id }}" id="form_{{ $article->id }}" method="post">
         @csrf
@@ -154,5 +156,8 @@
                 }
             }
         </script>
+        @else 
+        編集権限がありません
+        @endif
  </x-app-layout>
      

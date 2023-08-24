@@ -38,7 +38,7 @@ class HomeController extends Controller
             $query->on('comments.user_id', '=', 'users.id');
             });
         $query->where('article_id', '=', $articleId);
-        $query->orderBy('comments.created_at', 'Asc');
+        $query->orderBy('comments.created_at', 'Desc');
         $comments = $query->paginate(10);
         //$comments= Comment::where('article_id', $articleId)->paginate(10);
         //$comments = Comment::orderBy('created_at','desc')->get();
@@ -60,8 +60,8 @@ class HomeController extends Controller
         
         $comment->delete();
         //$articleId=$request['post.article_id'];
-        return response()->json($article_id);
-        //return redirect('/comment/'.$article_id);
+        //return response()->json($article_id);
+        return redirect('/comment/'.$article_id);
         
     }
     
@@ -70,7 +70,7 @@ class HomeController extends Controller
         $comments=$comment->where('article_id','=',$article->id)->orderBy('created_at','desc')->paginate(20);
        
         
-        return view('posts.comment')->with(['comments' => $comments]); 
+        return view('posts.comment')->with(['comments' => $comments,'article'=>$article]); 
     }
     
     public function commentdestroy(Request $request, Comment $comment) {
