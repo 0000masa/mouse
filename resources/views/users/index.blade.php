@@ -62,9 +62,11 @@
                                 @foreach($articles as $article)
                                 <div class="flex flex-col gap-3 py-4 md:py-8">
                                     <div class='block font-bold'>
-                                         <a class="block text-base font-bold" href="/posts/{{ $article->id }}">{{$article->product}}</a>
+                                         <p class="block text-sm text-gray-500">マウス:
+                                         <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/posts/{{ $article->id }}">{{$article->product}}</a></p>
                                         
-                                        <p class='text-gray-600'>{{$article->explanation}}</p>
+                                         <p class='block text-sm text-gray-500'>説明:
+                                        <span class='text-base  text-gray-800 '>{{$article->explanation}}</span></p>
                                         
                                     </div>
                                 </div>
@@ -74,7 +76,9 @@
                            <div class='paginate'>
                                 {{ $articles->links() }}
                             </div>
+                            
                         </div>
+                        <a href="{{ back()->getTargetUrl() }}" class="text-indigo-800 hover:text-blue-400">戻る</a></br>
             </div>
         </div>        
     </x-app-layout>

@@ -44,5 +44,5 @@
             </x-primary-button>
         </div>
     </form>
-    <a href="/register">新規ユーザー登録</a>
+    <a class="text-red-500 hover:text-yellow-700" href="/register">新規ユーザー登録</a>
 </x-guest-layout>

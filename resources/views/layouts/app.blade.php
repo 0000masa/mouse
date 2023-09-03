@@ -23,7 +23,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
-        <script src="https://cdn.tailwindcss.com"></script>
+        {{--<script src="https://cdn.tailwindcss.com"></script>--}}
     </head>
     <body class="font-sans antialiased">
         
@@ -44,11 +44,11 @@
                         
                         
                              
-                             <a href="/searches" class="mr-5 hover:text-gray-900">マウス検索</a>
-                             <a href="/usersearches" class="mr-5 hover:text-gray-900">ユーザー検索</a>
-                             <a href="/posts/create" class="mr-5 hover:text-gray-900">新規投稿作成</a>
-                             <a href="/follow/{{Auth::user()->id}}" class="mr-5 hover:text-gray-900">フォローした人の投稿</a>
-                            {{ $header }}
+                             <a href="/searches" class="mr-5 text-indigo-800 hover:text-blue-400">マウス検索</a>
+                             <a href="/usersearches" class="mr-5 text-indigo-800 hover:text-blue-400">ユーザー検索</a>
+                             <a href="/posts/create" class="mr-5 text-indigo-800 hover:text-blue-400">新規投稿作成</a>
+                             <a href="/follow/{{Auth::user()->id}}" class="mr-5 text-indigo-800 hover:text-blue-400">フォローしたユーザーの投稿</a>
+                            {{--{{ $header }}--}}
                        
                       </nav>
                   

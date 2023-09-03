@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('product', 50);
             $table->integer('price');
-            $table->integer('weight');
+            $table->integer('weight')->nullable();
             $table->integer('maximum_dpi')->nullable();
             $table->integer('buttons')->nullable();
             $table->string('explanation', 200);
             $table->string('image_url')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

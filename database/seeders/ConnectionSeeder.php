@@ -21,5 +21,11 @@ class ConnectionSeeder extends Seeder
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
          ]);
+         
+          DB::table('connections')->insert([
+                'name' => '無線',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ]);
     }
 }
