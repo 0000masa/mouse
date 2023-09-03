@@ -90,9 +90,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-dropdown-link :href="'/users/'.Auth::user()->id">
+                <x-responsive-nav-link :href="'/users/'.Auth::user()->id">
                     {{ __('プロフィール') }}
-                </x-dropdown-link>
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('アカウント情報編集') }}
                 </x-responsive-nav-link>
