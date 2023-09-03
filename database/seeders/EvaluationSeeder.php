@@ -16,7 +16,18 @@ class EvaluationSeeder extends Seeder
      */
     public function run()
     {
-         DB::table('evaluations')->insert([[
+         DB::table('evaluations')->insert([
+             [
+                'level' => '星5 とても良い',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],
+             [
+                'level' => '星4 良い',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ],
+             [
                 'level' => '星3 普通',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),

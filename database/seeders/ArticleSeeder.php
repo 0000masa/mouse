@@ -28,6 +28,7 @@ class ArticleSeeder extends Seeder
                 'connection_id'=>1,
                 'battery_id'=>1,
                 'evaluation_id'=>1,
+                'image_url'=>null,
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
          ]);

@@ -25,150 +25,138 @@
          <x-slot name="header">
             
         </x-slot>
-  
-  
-        <a href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
-        @if (Auth::check() && $article->user_id === Auth::user()->id)
-        <div class='edit'>
-            <a href="/posts/{{$article->id}}/edit">編集</a>
-        </div>
-        @endif
-        
-        {{--<div class="footer">
-            <a href="{{ back()->getTargetUrl() }}" class="btn btn-primary">戻る</a>
-        </div>--}}
-        
-        <h1 class="product">
-            {{$article->product}}
-        </h1>
-        <div>
-                <img src="{{ $article->image_url }}" alt="画像が読み込めません。"/>
-                
-        </div>
-        <div>
-           <p>
-               評価<br>
-                  {{ $article->evaluation->level }}
-           </p>
-       </div>
-       <div>
-           <p>
-               値段<br>
-                {{ $article->price }}
-           </p>
-       </div>
-        <div>
-           <p>
-               接続方式<br>
-                {{ $article->connection->name }}
-           </p>
-       </div>
-       <div>
-           <p>
-               使用電池<br>
-                {{ $article->battery->battery }}
-           </p>
-       </div>
-       <div>
-           <p>
-               重さ<br>
-                {{ $article->weight }}
-           </p>
-       </div>
-        <div>
-           <p>
-               最大dpi<br>
-                {{ $article->maximum_dpi }}
-           </p>
-       </div>
-       <div>
-           <p>
-               ボタン数<br>
-                {{ $article->buttons }}
-           </p>
-       </div>
-       <div>
-           <p>
-               メーカー<br>
-                {{ $article->manufacture->name }}
-           </p>
-       </div>
-       <div>
-           <p>
-               最大dpi<br>
-                {{ $article->maximum_dpi }}
-           </p>
-       </div>
-        <div class="content">
-            <div class="content__post">
-                <h3>レビュー</h3>
-                <p>{{ $article->explanation }}</p>    
-            </div>
-        </div>
-        
-        <div class="comment">コメント一覧</div>
-        {{--
-         @php
-         $comments=$article->comments()->paginate(10);
-         @endphp
-         <div class=commentarea>
-         @if($comments->isEmpty())
-            <p>コメントはありません</p>
-        @else
-             @foreach($comments as $comment)
-                        <div class='post'>
-                            <p>{{$comment->created_at}}</p>
-                            <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
-                            <p>{{$comment->comment}}</p>
-                            <form action="/comment/{{ $comment->id }}" id="form_{{ $comment->id }}" method="post">
-                                <input type="hidden" name="article_id" value="{{ $article->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" onclick="deletePost({{ $comment->id }})">削除</button> 
-                            </form>
-                             <form>
-                                <input type="submit" data-comment_id="{{ $comment->id }}" class="btn btn-danger btn-del" value="削除">
-                            </form>
+  　　  　<div class="bg-white py-6 sm:py-8 lg:py-12">
+            <div class="mx-auto max-w-screen-md px-4 md:px-8">
+                {{--<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">--}}
+                    <div>
+                        <div class="rounded-lg border p-4">
+                             <h2 class="mb-3 text-lg font-bold text-gray-800 lg:text-xl">画像</h2>
+                              <div class="mb-0.5 flex items-center gap-2">
+                                @if(isset($article->image_url)) 
+                                <img src="{{ $article->image_url }}" style=" max-width: 100%; max-height: 300px;"　alt="画像が読み込めません。"/>  
+                                @else
+                                    <p class="text-xl">画像はありません。</p>
+                                @endif  
+                              </div>
+                              <div class="mt-6 mb-0.5 flex items-center gap-2">
+                              @auth
+                                  <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
+                                  @if (!$article->isLikedBy(Auth::user()))
+                                    <span class="likes">
+                                        いいね
+                                        <i class="fas fa-heart like-toggle" data-review-id="{{ $article->id }}"></i>
+                                      <span class="like-counter">{{$article->likes_count}}</span>
+                                    </span><!-- /.likes -->
+                                  @else
+                                    <span class="likes">
+                                        いいね
+                                        <i class="fas fa-heart heart like-toggle liked" data-review-id="{{ $article->id }}"></i>
+                                      <span class="like-counter">{{$article->likes_count}}</span>
+                                    </span><!-- /.likes -->
+                                  @endif
+                                @endauth
+                                @guest
+                                  <span class="likes">
+                                      <i class="fas fa-heart heart"></i>
+                                    <span class="like-counter">{{$article->likes_count}}</span>
+                                  </span><!-- /.likes -->
+                                @endguest
+                                </div>
                         </div>
-            @endforeach
-        @endif
-        
-           
-         <div class='paginate'>
-            {{ $comments->links() }}
-        </div>
-        </div>--}}
-        
-      
-        <div id="comment-data">
-            
-        {{--
-        @php
-            $count = 1;
-        @endphp--}}
-        
-        {{--@foreach($comments as $comment)
-            <form>
-                <input type="submit" data-comment-id="{{ $comment->id }}" class="delete-button" value="削除">
-            </form>
-           @php
-                $count++;
-            @endphp
-        @endforeach--}}
-        
-        
-        </div>
-            <form id="comment-form" method="POST" action="/comment">
-                @csrf
-                <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
-                <input type="hidden" name="post[article_id]" value="{{ $article->id }}">
-                <textarea name="post[comment]"></textarea>
-                <button type="submit">コメントする</button>
-                <p class="comment__error" style="color:red">{{ $errors->first('post.comment') }}</p>
-            </form>
-        </div>
-        
-         <a href="/comment/{{$article->id}}">すべてのコメントを見る</a>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="divide-y">
+                            <div class="flex flex-col gap-3 py-4 md:py-8">
+                                <div class="flex items-center gap-10">
+                                    @if (Auth::check() && $article->user_id === Auth::user()->id)
+                                    <div class='edit'>
+                                        <a href="/posts/{{$article->id}}/edit" class="text-indigo-800 hover:text-blue-400">編集</a>
+                                    </div>
+                                    @endif
+                                    <div>
+                                        <a  href="{{ back()->getTargetUrl() }}" class="text-indigo-800 hover:text-blue-400">戻る</a>
+                                    </div>
+                              　</div>
+                                <div class="border-b pb-4 md:pb-6 my-1 whitespace-nowrap">
+                                      <p class="block text-sm text-gray-500 ">マウス:
+                                      <span class="text-lg font-bold text-gray-800 lg:text-xl ">{{$article->product}}</span></p>
+                                </div>
+                                <div class="border-b pb-4 md:pb-6 my-1">
+                                    <p class="block text-sm text-gray-500">ユーザー:
+                                    <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a></p>
+                                </div>
+                                <div class="border-b pb-4 md:pb-6 my-1">
+                                     <p class="block text-sm text-gray-500">評価:
+                                     <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->evaluation->level }}</span></p>
+                               </div>
+                               <div class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">値段:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->price }}円</span></p>
+                               </div>
+                                <div  class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">接続方式:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->connection->name }}</span></p>
+                               </div>
+                               <div class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">使用電池:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->battery->battery }}</span></p>
+                               </div>
+                               @if(isset($article->weight))
+                               <div class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">重さ:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->weight }}g</span></p>
+                               </div>
+                               @endif
+                               @if(isset($article->maximum_dpi))
+                                <div class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">最大dpi:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->maximum_dpi }}</span></p>
+                               </div>
+                               @endif
+                            　 @if(isset($article->buttons))
+                               <div class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">ボタン数:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->buttons }}</span></p>
+                               </div>
+                               @endif
+                               <div class="border-b pb-4 md:pb-6 my-1">
+                                   <p class="block text-sm text-gray-500">メーカー:
+                                   <span class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->manufacture->name }}</span></p>
+                               </div>
+                                <div class="border-b pb-4 md:pb-6 my-1">
+                                    <p class="block text-sm text-gray-500">説明</p> 
+                                    <p class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->explanation }}</p>   
+                                </div>
+                                
+                                <div class="border-b pb-4 md:pb-6 my-4 ">
+                                    <p class="text-xl mt-20">コメント一覧</p>
+                                     <div  id="comment-data"></div>
+                                </div>
+                                
+                                
+                              
+                                
+                                <div>
+                                    <form id="comment-form" method="POST" action="/comment">
+                                        @csrf
+                                        <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
+                                        <input type="hidden" name="post[article_id]" value="{{ $article->id }}">
+                                        <textarea name="post[comment]" class="w-full " rows="4"></textarea >
+                                        <button type="submit" class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">コメントする</button>
+                                        <p class="comment__error" style="color:red">{{ $errors->first('post.comment') }}</p>
+                                    </form>
+                                </div>
+                              
+                                <div>
+                                    <a class="text-red-500 hover:text-yellow-700" href="/comment/{{$article->id}}">すべてのコメントを見る</a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                  {{--</div>--}}
+            </div>
+      </div> 
         
         
        
@@ -187,9 +175,11 @@
                     url: "result/ajax/" +articleId,
                     dataType: "json",
                     success: data => {
-                        $("#comment-data")
+                        {{--$("#comment-data")
                             .find(".comment-visible")
-                            .remove();
+                            .remove();--}}
+                            $("#comment-data")
+                           $("#media\\ comment-visible").remove();
                             
                              
                         for (var i = 0; i < data.comments.length; i++) {
@@ -199,31 +189,19 @@
                            
                             let html = `
                            
-                                        <div class="media comment-visible">
-                                    
+                                        {{--<div class="media comment-visible">--}}
+                                       <div id="media comment-visible" class="border-b pb-4 md:pb-6 my-1">
                                             
                                             <div class="media-body comment-body">
                                                 <div class="row">
                                                     
-                                                    <a href="/users/${data.comments[i].user_id}">${data.comments[i].name}</a>
+                                                    <a  href="/users/${data.comments[i].user_id}">${data.comments[i].name}さん</a>
                                                     
                                                 </div>
                                                 <span class="comment-body-content" id="comment">${data.comments[i].comment}</span>
                                                
                                                 
-                                                {{--<form action="/comment/destroy/${data.comments[i].id}" id="form_${data.comments[i].id}" method="post">
-                                                    <input type="hidden" name="article_id" value="{{$article->id}}">
-                                                        
-                                                        @csrf
-                                                        @method('DELETE')
-                                                <button class="delete-button" data-comment-id="${data.comments[i].id}">削除</button>
-                                                
-                                                </form>--}}
-                                                
-                                                {{--<form >
-                                                <input type="submit" data-comment_id="${data.comments[i].id}" class="btn btn-danger btn-del" value="削除">
-                                                
-                                                </form>--}}
+                                               
                                                 
                                             </div>
                                         </div>
@@ -235,19 +213,7 @@
                    
                                     `;
                         
-                       {{-- @foreach($comments as $comment)
-                        <div class='post'>
-                            <p>{{$comment->created_at}}</p>
-                            <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
-                            <p>{{$comment->comment}}</p>
-                            <form action="/comment/{{ $comment->id }}" id="form_{{ $comment->id }}" method="post">
-                                <input type="hidden" name="article_id" value="{{ $article->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" onclick="deletePost({{ $comment->id }})">削除</button> 
-                            </form>
-                        </div>
-            @endforeach--}}
+                     
                        
         
                  $("#comment-data").append(html);
@@ -257,7 +223,7 @@
                         }
                     },
                     error:()=>{
-                        alert("ajaxが失���しました");
+                        alert("ajaxが失敗しました");
                     }
                 });
             } 
@@ -419,28 +385,7 @@
       
       
       
-           
-        @auth
-          <!-- Review.phpに作ったisLikedByメソッドをここで使用 -->
-          @if (!$article->isLikedBy(Auth::user()))
-            <span class="likes">
-                <i class="fas fa-heart like-toggle" data-review-id="{{ $article->id }}"></i>
-              <span class="like-counter">{{$article->likes_count}}</span>
-            </span><!-- /.likes -->
-          @else
-            <span class="likes">
-                <i class="fas fa-heart heart like-toggle liked" data-review-id="{{ $article->id }}"></i>
-              <span class="like-counter">{{$article->likes_count}}</span>
-            </span><!-- /.likes -->
-          @endif
-        @endauth
-        @guest
-          <span class="likes">
-              <i class="fas fa-heart heart"></i>
-            <span class="like-counter">{{$article->likes_count}}</span>
-          </span><!-- /.likes -->
-        @endguest
-        
+       
        
         
         <script>
@@ -485,7 +430,7 @@
               url: '/like/count', 
               method: 'POST', 
               data: { 
-                'article_id': likeReviewId //投稿のidを送る
+                'article_id': likeReviewId 
               },
             })
             .done(function (data) {

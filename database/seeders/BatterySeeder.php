@@ -21,5 +21,17 @@ class BatterySeeder extends Seeder
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
          ]);
+         
+          DB::table('batteries')->insert([
+                'battery' => '充電式',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ]);
+         
+          DB::table('batteries')->insert([
+                'battery' => '乾電池',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+         ]);
     }
 }
