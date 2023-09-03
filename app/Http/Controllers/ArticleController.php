@@ -93,7 +93,7 @@ class ArticleController extends Controller
              'post.product' => 'required|string|max:100',
              'post.price' => 'required|numeric|max:1000000',
              'post.maximum_dpi' => 'nullable|numeric|max:1000000',
-             'post.weight' => 'required|numeric|max:10000',
+             'post.weight' => 'nullable|numeric|max:10000',
              'post.buttons' => 'nullable|numeric|max:100',
             'post.explanation' => 'required|string|max:4000',
             'post.image_url' => 'nullable|image',
@@ -101,9 +101,9 @@ class ArticleController extends Controller
         [
              'post.product' => '商品名を入力してください。',
              'post.price' => '金額を入力してください',
-             'post.maximum_dpi' => '最大DPIを入力してください',
-             'post.weight' => '重さを入力してください',
-             'post.buttons' => 'ボタン数を入力してください',
+             'post.maximum_dpi' => '正しい数値を入力してください',
+             'post.weight' => '正しい数値を入力してください',
+             'post.buttons' => '正しい数値を入力してください',
             'post.explanation' => '説明を入力してください',
             'post.image_url' => '画像データを選択してください',
         ]);
