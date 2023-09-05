@@ -59,7 +59,8 @@ class SearchController extends Controller
         }
         
         if(!empty($product)) {
-            $query->where('product', 'LIKE', "%{$product}%");
+            //$query->where('product', 'LIKE', "%{$product}%");
+             $query->whereRaw('LOWER(product) LIKE ?', ['%' . strtolower($product) . '%']);
         }
         
         
@@ -93,7 +94,8 @@ class SearchController extends Controller
       
         
         if(!empty($name)) {
-            $query->where('name', 'LIKE', "%{$name}%");
+            //$query->where('name', 'LIKE', "%{$name}%");
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($name) . '%']);
         }
         
         

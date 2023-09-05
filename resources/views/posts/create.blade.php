@@ -20,27 +20,27 @@
                     @csrf
                     <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
                     <div class="product">
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">マウス名(必須)</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">マウス名<span class="text-red-500 text-xs">必須</span></h2>
                         <input type="text" name=post[product] class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" value="{{ old('post.product') }}"/>
                         <p class="product__error" style="color:red">{{ $errors->first('post.product') }}</p>
                     </div>
                     <div class="price">
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">金額(必須)</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">金額(円)<span class="text-red-500 text-xs">必須</span></h2>
                         <input type="number" name=post[price]  class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" value="{{ old('post.price') }}"/>
                         <p class="price__error" style="color:red">{{ $errors->first('post.price') }}</p>
                     </div>
                     <div class="weight">
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">重さ(任意)</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">重さ(ｇ)</h2>
                         <input type="number" name=post[weight] class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" value="{{ old('post.weight') }}"/>
                         <p class="weight__error" style="color:red">{{ $errors->first('post.weight') }}</p>
                     </div>
                     <div class="maximum_dpi">
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">最大DPI(任意)</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">最大DPI</h2>
                         <input type="number" name=post[maximum_dpi] class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" value="{{ old('post.maximum_dpi') }}"/>
                         <p class="maximum_dpi__error" style="color:red">{{ $errors->first('post.maximum_dpi') }}</p>
                     </div>
                      <div class="buttons">
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">ボタン数(左右クリックとホイールボタンの3つを含む (任意))</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">ボタン数(左右クリックとホイールボタンの3つを含む)</h2>
                         <input type="number" name=post[buttons] class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" value="{{ old('post.buttons') }}"/>
                         <p class="buttons__error" style="color:red">{{ $errors->first('post.buttons') }}</p>
                     </div>
@@ -95,12 +95,12 @@
                     </div>
                     
                     <div class=sm:col-span-2>
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">説明(必須)</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">説明<span class="text-red-500 text-xs">必須</span></h2>
                         <textarea name="post[explanation]" class="h-64 w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring">{{ old('post.explanation') }}</textarea>
                         <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
                     </div>
                     <div class=sm:col-span-2>
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像(任意)</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像</h2>
                         <input type="file" name="post[image_url]"  id="imageInput" class="w-full rounded border bg-gray-50  text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring">
                         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; max-height: 300px;"　>
                          <p class="image__error" style="color:red">{{ $errors->first('post.image_url') }}</p>

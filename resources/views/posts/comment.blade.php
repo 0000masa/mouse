@@ -11,7 +11,7 @@
                                             <div class='flex flex-col gap-3 py-4 md:py-8'>
                                                 <div class="block font-bold">
                                                     <p class="text-lg font-bold text-gray-800 lg:text-xl">{{$comment->created_at}}</p>
-                                                    <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                    <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}さん</a>
                                                     <p class="text-lg font-bold text-gray-800 lg:text-xl">{{$comment->comment}}</p>
                                                     @if (Auth::check() && $comment->user_id === Auth::user()->id)
                                                     <form action="/comment/{{ $comment->id }}" method="post">
