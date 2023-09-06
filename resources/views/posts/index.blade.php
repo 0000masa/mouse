@@ -15,7 +15,7 @@
         <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="mx-auto max-w-screen-md px-4 md:px-8">
                 <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl xl:mb-12">投稿一覧</h2>
-                    <div class="mb-4 flex items-center justify-between border-t border-b py-4">
+                    {{--<div class="mb-4 flex items-center justify-between border-t border-b py-4">--}}
                         <div class="divide-y">
                             
                                 @foreach($articles as $article)
@@ -36,7 +36,7 @@
                                 @endforeach
                              <div class='inline-block'>{{ $articles->links() }}</div>
                         </div>
-                    </div>
+                    {{--</div>--}}
             </div>
         </div>
         

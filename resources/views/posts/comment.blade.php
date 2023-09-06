@@ -5,7 +5,7 @@
          <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="mx-auto max-w-screen-md px-4 md:px-8">
                 <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl xl:mb-12">すべてのコメント</h2>
-                     <div class="mb-4 flex items-center justify-between border-t border-b py-4">
+                     {{--<div class="mb-4 flex items-center justify-between  py-4">--}}
                         <div class="divide-y"> 
                              @foreach($comments as $comment)
                                             <div class='flex flex-col gap-3 py-4 md:py-8'>
