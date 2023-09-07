@@ -49,21 +49,21 @@ class ArticleController extends Controller
     public function store(Request $request, Article $article)
     {
         $request->validate([
-             'post.product' => 'required|string|max:100',
+             'post.product' => 'required|string|max:50',
              'post.price' => 'required|numeric|max:1000000',
              'post.maximum_dpi' => 'nullable|numeric|max:1000000',
              'post.weight' => 'nullable|numeric|max:10000',
              'post.buttons' => 'nullable|numeric|max:100',
-            'post.explanation' => 'required|string|max:4000',
+            'post.explanation' => 'required|string|max:200',
             'post.image_url' => 'nullable|image',
         ],
         [
-             'post.product' => '商品名を入力してください。',
+             'post.product' => '商品名を正しく入力してください。',
              'post.price' => '金額を入力してください',
              'post.maximum_dpi' => '正しい数値を入力してください',
              'post.weight' => '正しい数値を入力してください',
              'post.buttons' => '正しい数値を入力してください',
-            'post.explanation' => '説明を入力してください',
+            'post.explanation' => '説明を正しく入力してください',
             'post.image_url' => '画像データを選択してください',
         ]);
         $input = $request['post'];
@@ -90,21 +90,21 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $request->validate([
-             'post.product' => 'required|string|max:100',
+             'post.product' => 'required|string|max:50',
              'post.price' => 'required|numeric|max:1000000',
              'post.maximum_dpi' => 'nullable|numeric|max:1000000',
              'post.weight' => 'nullable|numeric|max:10000',
              'post.buttons' => 'nullable|numeric|max:100',
-            'post.explanation' => 'required|string|max:4000',
+            'post.explanation' => 'required|string|max:200',
             'post.image_url' => 'nullable|image',
         ],
         [
-             'post.product' => '商品名を入力してください。',
+             'post.product' => '商品名を正しく入力してください。',
              'post.price' => '金額を入力してください',
              'post.maximum_dpi' => '正しい数値を入力してください',
              'post.weight' => '正しい数値を入力してください',
              'post.buttons' => '正しい数値を入力してください',
-            'post.explanation' => '説明を入力してください',
+            'post.explanation' => '説明を正しく入力してください',
             'post.image_url' => '画像データを選択してください',
         ]);
         

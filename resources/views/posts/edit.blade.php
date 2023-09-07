@@ -18,7 +18,7 @@
                         <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
                         
                         <div class="product">
-                            <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">マウス名<span class="text-red-500 text-xs">必須</span></h2>
+                            <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">マウス名(50字まで)<span class="text-red-500 text-xs">必須</span></h2>
                             <input type="text" name=post[product]  class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" value="@if ($errors->any()){{ old('post.product') }}@else{{$article->product}}@endif"/>
                             <p class="product__error" style="color:red">{{ $errors->first('post.product') }}</p>
                         </div>
@@ -105,7 +105,7 @@
                         </div>
                         
                         <div class=" sm:col-span-2">
-                            <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">説明<span class="text-red-500 text-xs">必須</span></h2>
+                            <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">説明(200字まで)<span class="text-red-500 text-xs">必須</span></h2>
                             <textarea name="post[explanation]"  class="h-64 w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring">@if ($errors->any()){{ old('post.explanation') }}@else{{ $article->explanation }}@endif
                             </textarea>
                             <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
