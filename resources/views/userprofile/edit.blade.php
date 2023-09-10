@@ -52,7 +52,7 @@
               reader.readAsDataURL(file);
             } else {
               imagePreview.src = profileImgUrl;
-              imagePreview.style.display = 'none';
+              //imagePreview.style.display = 'none';
             }
           });
         </script>

@@ -46,7 +46,7 @@
               reader.readAsDataURL(file);
             } else {
               imagePreview.src = '#';
-              imagePreview.style.display = 'none';
+              //imagePreview.style.display = 'none';
             }
           });
         </script>
