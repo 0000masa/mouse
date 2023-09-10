@@ -100,7 +100,7 @@
                         <p class="explanation__error" style="color:red">{{ $errors->first('post.explanation') }}</p>
                     </div>
                     <div class=sm:col-span-2>
-                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像</h2>
+                        <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像(2MBまで)</h2>
                         <input type="file" name="post[image_url]"  id="imageInput" class="w-full rounded border bg-gray-50  text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring">
                         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; max-height: 300px;"　>
                          <p class="image__error" style="color:red">{{ $errors->first('post.image_url') }}</p>

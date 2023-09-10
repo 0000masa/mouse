@@ -6,6 +6,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserprofileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +59,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/usersearches', [SearchController::class, 'userindex']);
     Route::get('/usersearches/do', [SearchController::class, 'usersearch']);
     
+    Route::get('/userprofile/create', [UserprofileController::class, 'create']);
+    Route::post('/userprofile', [UserprofileController::class, 'store']);
+    Route::get('/userprofile/{profile}/edit', [UserprofileController::class, 'edit']);
+    Route::put('/userprofile/{profile}', [UserprofileController::class, 'update']);
 });
  
 

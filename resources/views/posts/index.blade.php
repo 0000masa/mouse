@@ -21,8 +21,30 @@
                                 @foreach($articles as $article)
                                 <div class="flex flex-col gap-3 py-4 md:py-8">
                                     <div class="block font-bold">
-                                        <p class="block text-sm text-gray-500">ユーザー:
-                                        <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a></p>
+                                        @if(!$article->user->profile || !$article->user->profile->id)
+                                       <div class="flex items-center">
+                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                          </div>
+                                          <a class="ml-4 text-lg" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                        </div>
+                                        @elseif($article->user->profile->image_url===null)
+                                             <div class="flex items-center">
+                                              <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                              </div>
+                                              <a class="ml-4 text-lg" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                            </div>
+                                        @else
+                                             <div class="flex items-center">
+                                              <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                <img src="{{$article->user->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover " />
+                                              </div>
+                                              <a class="ml-4 text-lg" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                            </div>
+                                        @endif
+                                        {{--<p class="block text-sm text-gray-500">ユーザー:
+                                        <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a></p>--}}
                                          <p class="block text-sm text-gray-500">マウス:
                                          <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/posts/{{ $article->id }}">{{$article->product}}</a></p>
                                         

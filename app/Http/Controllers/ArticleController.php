@@ -55,7 +55,7 @@ class ArticleController extends Controller
              'post.weight' => 'nullable|numeric|max:10000',
              'post.buttons' => 'nullable|numeric|max:100',
             'post.explanation' => 'required|string|max:200',
-            'post.image_url' => 'nullable|image',
+            'post.image_url' => 'nullable|image|max:2000',
         ],
         [
              'post.product' => '商品名を正しく入力してください。',
@@ -64,7 +64,7 @@ class ArticleController extends Controller
              'post.weight' => '正しい数値を入力してください',
              'post.buttons' => '正しい数値を入力してください',
             'post.explanation' => '説明を正しく入力してください',
-            'post.image_url' => '画像データを選択してください',
+            'post.image_url' => '正しい画像データを選択してください',
         ]);
         $input = $request['post'];
         
@@ -96,7 +96,7 @@ class ArticleController extends Controller
              'post.weight' => 'nullable|numeric|max:10000',
              'post.buttons' => 'nullable|numeric|max:100',
             'post.explanation' => 'required|string|max:200',
-            'post.image_url' => 'nullable|image',
+            'post.image_url' => 'nullable|image|max:2000',
         ],
         [
              'post.product' => '商品名を正しく入力してください。',
@@ -105,7 +105,7 @@ class ArticleController extends Controller
              'post.weight' => '正しい数値を入力してください',
              'post.buttons' => '正しい数値を入力してください',
             'post.explanation' => '説明を正しく入力してください',
-            'post.image_url' => '画像データを選択してください',
+            'post.image_url' => '正しい画像データを選択してください',
         ]);
         
         $input_post = $request['post'];

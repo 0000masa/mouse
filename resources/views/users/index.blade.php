@@ -18,9 +18,31 @@
             <div class="mx-auto max-w-screen-md px-4 md:px-8">
                 <div class="max-w-2xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
                      <div class="flex items-center justify-between">
-                         <div>
+                         {{--<div>
                             <p>ユーザー名: <span class="text-base font-bold">{{$user->name}}</span></p>
-                         </div>
+                         </div>--}}
+                           @if(!$user->profile || !$user->profile->id)
+                                <div class="flex items-center">
+                                  <div class="w-16 h-16 rounded-full overflow-hidden">
+                                    <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                  </div>
+                                  <a class="ml-4 text-lg font-bold text-gray-800 lg:text-xl ml-4" href="/users/{{ $user->id }}">{{ $user->name }}</a>
+                                </div>
+                            @elseif($user->profile->image_url===null)
+                              <div class="flex items-center">
+                                  <div class="w-16 h-16 rounded-full overflow-hidden">
+                                    <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                  </div>
+                                  <a class="ml-4 text-lg font-bold text-gray-800 lg:text-xl ml-4" href="/users/{{ $user->id }}">{{ $user->name }}</a>
+                            </div>
+                            @else
+                              <div class="flex items-center">
+                                  <div class="w-16 h-16 rounded-full overflow-hidden">
+                                    <img src="{{$user->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                  </div>
+                                  <a class="ml-4 text-lg font-bold text-gray-800 lg:text-xl ml-4" href="/users/{{ $user->id }}">{{ $user->name }}</a>
+                              </div>
+                            @endif
                          <div>
                             @if(Auth::check() && Auth::user()->id !== $user->id)
                                 @if(Auth::user()->follows->contains($user->id))
@@ -28,11 +50,21 @@
                                 @else
                                 <button  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onclick="follow({{ $user->id }})"><span id="follow-status-{{ $user->id }}">フォローする</span></button>
                                 @endif
+                            @elseif(!$user->profile || !$user->profile->id)
+                             <a class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" href="/userprofile/create">編集</a>
+                            @else
+                            <a class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" href="/userprofile/{{$user->profile->id}}/edit">編集</a>
                             @endif
                          </div>
                         
                     </div>
-                    
+                    @if($user->profile )
+                        <div class="max-w-2xl  py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                           <p class="break-words">
+                               {{$user->profile->introduce}}
+                            </p>
+                        </div>
+                    @endif
                  
                      <div class="flex ">
                         <p><a href="/follow/follows/{{$user->id}}">{{ $user->follows()->count();}}フォロー</a></p> 　
@@ -40,8 +72,9 @@
                             <a href="/follow/followers/{{$user->id}}">
                                 <span id="follower-number-{{ $user->id }}">{{ $user->followers()->count();}}</span>フォロワー
                             </a>
-                        </p></br>
+                        </p>
                      </div>
+                   
                 
                
                  

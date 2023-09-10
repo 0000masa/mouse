@@ -11,7 +11,29 @@
                                             <div class='flex flex-col gap-3 py-4 md:py-8'>
                                                 <div class="block font-bold">
                                                     <p class="text-lg font-bold text-gray-800 lg:text-xl">{{$comment->created_at}}</p>
-                                                    <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}さん</a>
+                                                    {{--<a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}さん</a>--}}
+                                                     @if(!$comment->user->profile || !$comment->user->profile->id)
+                                                       <div class="flex items-center">
+                                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                          </div>
+                                                          <a class="ml-4 text-lg" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                        </div>
+                                                        @elseif($comment->user->profile->image_url===null)
+                                                             <div class="flex items-center">
+                                                              <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                                <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                              </div>
+                                                              <a class="ml-4 text-lg" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                            </div>
+                                                        @else
+                                                             <div class="flex items-center">
+                                                              <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                                <img src="{{$comment->user->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                              </div>
+                                                              <a class="ml-4 text-lg" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                            </div>
+                                                        @endif
                                                     <p class="text-lg font-bold text-gray-800 lg:text-xl">{{$comment->comment}}</p>
                                                     @if (Auth::check() && $comment->user_id === Auth::user()->id)
                                                     <form action="/comment/{{ $comment->id }}" method="post">

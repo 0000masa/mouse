@@ -12,24 +12,47 @@
                                 <p>検索結果はありません。</p>
                             @else
                               
-                            @foreach($items as $item)
-                               
-                                @php
-                               $username = App\Models\User::where('id', $item->user_id)->first();
-                                @endphp
-                                    <div class='flex flex-col gap-3 py-4 md:py-8'>
-                                        <div class="block font-bold">
-                                            <p class="block text-sm text-gray-500">ユーザー:
-                                            <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $item->user_id }}">{{ $username->name }}</a></p>
-                                            <p class="block text-sm text-gray-500">マウス:
-                                            <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/posts/{{$item->id}}">{{$item->product}}</a></p>
-                                            
-                                            <p class='block text-sm text-gray-500'>説明:
-                                            <span  class="text-base  text-gray-800 ">{{$item->explanation}}</span></p>
+                                @foreach($items as $item)
+                                   
+                                    @php
+                                   $username = App\Models\User::where('id', $item->user_id)->first();
+                                    @endphp
+                                    
+                                        <div class='flex flex-col gap-3 py-4 md:py-8'>
+                                            <div class="block font-bold">
+                                                {{--<p class="block text-sm text-gray-500">ユーザー:
+                                                <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $item->user_id }}">{{ $username->name }}</a></p>--}}
+                                                   @if(!$username->profile || !$username->profile->id)
+                                                   <div class="flex items-center">
+                                                      <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                        <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                      </div>
+                                                      <a class="ml-4 text-lg" href="/users/{{ $item->user_id }}">{{ $username->name }}</a>
+                                                    </div>
+                                                    @elseif($username->profile->image_url===null)
+                                                         <div class="flex items-center">
+                                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                          </div>
+                                                          <a class="ml-4 text-lg" href="/users/{{ $item->user_id }}">{{ $usernamer->name }}</a>
+                                                        </div>
+                                                    @else
+                                                         <div class="flex items-center">
+                                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                            <img src="{{$username->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                          </div>
+                                                          <a class="ml-4 text-lg" href="/users/{{ $item->user_id }}">{{ $username->name }}</a>
+                                                        </div>
+                                                    @endif
+                                                <p class="block text-sm text-gray-500">マウス:
+                                                <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/posts/{{$item->id}}">{{$item->product}}</a></p>
+                                                
+                                                <p class='block text-sm text-gray-500'>説明:
+                                                <span  class="text-base  text-gray-800 ">{{$item->explanation}}</span></p>
+                                            </div>
                                         </div>
-                                    </div>
-                               
-                            @endforeach
+                                   
+                                @endforeach
                          　@endif
                          　<div class='paginate'>
                                 {{ $items->links() }}

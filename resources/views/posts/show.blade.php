@@ -77,13 +77,35 @@
                                         <a  href="{{ back()->getTargetUrl() }}" class="text-indigo-800 hover:text-blue-400">戻る</a>
                                     </div>
                               　</div>
-                                <div class="border-b pb-4 md:pb-6 my-1 whitespace-nowrap">
+                              　 <div class="border-b pb-4 md:pb-6 my-1">
+                              　     @if(!$article->user->profile || !$article->user->profile->id)
+                                        <div class="flex items-center">
+                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                          </div>
+                                          <a class="ml-4 text-lg font-bold text-gray-800 lg:text-xl ml-4" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                        </div>
+                                    @elseif($article->user->profile->image_url===null)
+                                      <div class="flex items-center">
+                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                          </div>
+                                          <a class="ml-4 text-lg font-bold text-gray-800 lg:text-xl ml-4" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                    </div>
+                                    @else
+                                      <div class="flex items-center">
+                                          <div class="w-11 h-11 rounded-full overflow-hidden">
+                                            <img src="{{$article->user->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                          </div>
+                                          <a class="ml-4 text-lg font-bold text-gray-800 lg:text-xl ml-4" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a>
+                                      </div>
+                                    @endif
+                                    {{--<p class="block text-sm text-gray-500">ユーザー:
+                                    <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a></p>--}}
+                                </div>
+                                <div class="border-b pb-4 md:pb-6 my-1 ">
                                       <p class="block text-sm text-gray-500 ">マウス:
                                       <span class="text-lg font-bold text-gray-800 lg:text-xl ">{{$article->product}}</span></p>
-                                </div>
-                                <div class="border-b pb-4 md:pb-6 my-1">
-                                    <p class="block text-sm text-gray-500">ユーザー:
-                                    <a class="text-lg font-bold text-gray-800 lg:text-xl" href="/users/{{ $article->user->id }}">{{ $article->user->name }}</a></p>
                                 </div>
                                 <div class="border-b pb-4 md:pb-6 my-1">
                                      <p class="block text-sm text-gray-500">評価:

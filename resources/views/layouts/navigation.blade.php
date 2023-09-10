@@ -30,7 +30,31 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>ログインユーザー:{{ Auth::user()->name }}</div>
+                            
+                             @if(!Auth::user()->profile || !Auth::user()->profile->id)
+                                <div class="flex items-center">
+                                  <div class="w-6 h-6 rounded-full overflow-hidden">
+                                    <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                  </div>
+                                  
+                                </div>
+                            @elseif(Auth::user()->profile->image_url===null)
+                              <div class="flex items-center">
+                                  <div class="w-6 h-6 rounded-full overflow-hidden">
+                                    <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                  </div>
+                                
+                            </div>
+                            @else
+                              <div class="flex items-center">
+                                  <div class="w-6 h-6 rounded-full overflow-hidden">
+                                    <img src="{{Auth::user()->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                  </div>
+                                  
+                              </div>
+                            @endif
+                            
+                            <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -80,12 +104,39 @@
             {{--<x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>--}}
+            
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="flex items-center">
+                     @if(!Auth::user()->profile || !Auth::user()->profile->id)
+                        <div class="flex items-center">
+                          <div class="w-6 h-6 rounded-full overflow-hidden">
+                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                          </div>
+                          
+                        </div>
+                    @elseif(Auth::user()->profile->image_url===null)
+                      <div class="flex items-center">
+                          <div class="w-6 h-6 rounded-full overflow-hidden">
+                            <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                          </div>
+                        
+                    </div>
+                    @else
+                      <div class="flex items-center">
+                          <div class="w-6 h-6 rounded-full overflow-hidden">
+                            <img src="{{Auth::user()->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                          </div>
+                          
+                      </div>
+                    @endif
+                    <!-- アイコンと名前の間に隙間を追加 -->
+                    <div class="mr-2"></div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                </div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 

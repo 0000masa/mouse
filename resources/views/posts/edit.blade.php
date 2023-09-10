@@ -112,17 +112,17 @@
                         </div>
                         <div class=sm:col-span-2>
                             @if ($article->image_url)
-                            <h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像は変更できません。</h2></br/>
+                            {{--<h2 class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像は変更できません。</h2></br/>--}}
+                             <input name="post[image_url]"  id="imageInput" type="file" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 ring-indigo-300 transition duration-100 " />
                             <p class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像</p>
-                            <img id="existingImage" src="{{ $article->image_url }}"  style=" max-width: 100%; max-height: 300px;" alt="画像が読み込めません。"/>
+                            <img id="imagePreview" src="{{ $article->image_url }}"  style=" max-width: 100%; max-height: 300px;" alt="画像が読み込めません。"/>
                             @else
                             <p class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像はありません</p>
                             @endif
-                            {{--<img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; max-height: 300px;">--}}
-                             {{--<p class="image__error" style="color:red">{{ $errors->first('post.image_url') }}</p>--}}
+                            
                         </div>
                         
-                        {{--<input type="submit" value="変更する">--}}
+                       
                         <div class="flex items-center justify-between sm:col-span-2">
                             <button class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">変更する</button>
                         </div>
@@ -150,28 +150,27 @@
                     @endif    
             </div>
         </div>
-        {{--<script>
-              const imageInput = document.getElementById('imageInput');
-              const imagePreview = document.getElementById('imagePreview');
-              const existingImage = document.getElementById('existingImage');
-            
-              imageInput.addEventListener('change', function () {
-                const file = imageInput.files[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onload = function (e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                    existingImage.style.display = 'none';
-                  };
-                  reader.readAsDataURL(file);
-                } else {
-                  imagePreview.src = '#';
-                  imagePreview.style.display = 'none';
-                  existingImage.style.display = 'block';
-                }
-              });
-        </script>--}}
+        
+         <script>
+          const imageInput = document.getElementById('imageInput');
+          const imagePreview = document.getElementById('imagePreview');
+           const profileImgUrl = "{{$article->image_url}}";
+        
+          imageInput.addEventListener('change', function () {
+            const file = imageInput.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+              };
+              reader.readAsDataURL(file);
+            } else {
+              imagePreview.src = profileImgUrl;
+              imagePreview.style.display = 'none';
+            }
+          });
+        </script>
         <script>
             function deletePost(id) {
                 'use strict'
