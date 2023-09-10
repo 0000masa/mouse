@@ -59,7 +59,7 @@
                         
                     </div>
                     @if($user->profile )
-                        <div class="max-w-2xl  py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <div class="max-w-2xl  py-4 bg-white ">
                            <p class="break-words">
                                {{$user->profile->introduce}}
                             </p>
