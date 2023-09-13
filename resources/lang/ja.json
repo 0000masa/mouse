@@ -46,5 +46,20 @@
     "Click here to re-send the verification email.":"ここをクリックして確認メールを再送信してください。",
     "Are you sure you want to delete your account?":"アカウントを削除してもよろしいですか?",
     "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.":"アカウントが削除されると、そのリソースとデータはすべて完全に削除されます。アカウントを完全に削除することを確認するため、パスワードを入力してください。",
-    "Cancel":"キャンセル"
+    "Cancel":"キャンセル",
+    
+    
+    
+    
+    "Hello!": "お知らせ",
+   "Verify Email Address": "メールアドレス確認",
+   "Please click the button below to verify your email address.": "ボタンをクリックして、登録されたメールアドレスを確認してください。",
+   "If you did not create an account, no further action is required.": "このメールの内容に覚えがない場合は、このまま破棄してください。",
+   "Regards": "どうぞ、よろしくお願い致します",
+   "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:actionURL](:actionURL)": "\":actionText\" ボタンをクリックできない場合は, こちらのURLをコピーしてブラウザに貼り付けてください: [:actionURL](:actionURL)",
+    
+   "Reset password":"パスワード再設定",
+   "You are receiving this email because we received a password reset request for your account.":"このメールは、アカウントのパスワード リセット リクエストを受け取ったためにお送りしています。",
+   "A new verification link has been sent to the email address you provided during registration.":"新しい確認リンクが、登録時に指定した電子メール アドレスに送信されました",
+   "This password reset link will expire in :count minutes.": "このリンクの有効期限は、:count 分後までです。"
 } 

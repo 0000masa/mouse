@@ -24,8 +24,8 @@ use App\Http\Controllers\UserprofileController;
     //return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-//Route::middleware('verified')->group(function(){
+//Route::middleware('auth')->group(function () {
+Route::middleware('verified')->group(function(){
     Route::get('/', [ArticleController::class, 'index'])->middleware('auth');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
