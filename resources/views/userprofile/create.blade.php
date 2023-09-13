@@ -14,7 +14,7 @@
                 <div>
                   <p  class="mb-2 inline-block text-sm text-gray-800 sm:text-base">画像(2MBまで)</p>
                   <input name="post[image_url]"  id="imageInput" type="file" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 ring-indigo-300 transition duration-100 " />
-                  <img id="imagePreview" src="#"  class="hidden w-32 h-32 rounded-full object-cover" {{--style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;"--}}　>
+                  <img id="imagePreview" src=""  class="hidden w-32 h-32 rounded-full object-cover" {{--style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;"--}}　>
                    <p class="explanation__error" style="color:red">{{ $errors->first('post.image_url') }}</p>
                 </div>
                
@@ -45,7 +45,7 @@
               };
               reader.readAsDataURL(file);
             } else {
-              imagePreview.src = '#';
+              imagePreview.src = '';
               //imagePreview.style.display = 'none';
             }
           });

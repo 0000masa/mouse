@@ -46,9 +46,13 @@
                          <div>
                             @if(Auth::check() && Auth::user()->id !== $user->id)
                                 @if(Auth::user()->follows->contains($user->id))
-                                <button  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onclick="follow({{ $user->id }})"><span id="follow-status-{{ $user->id }}">フォロー中</span></button>
+                                <button  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg 
+                                hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" 
+                                onclick="follow({{ $user->id }})"><span id="follow-status-{{ $user->id }}">フォロー中</span></button>
                                 @else
-                                <button  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" onclick="follow({{ $user->id }})"><span id="follow-status-{{ $user->id }}">フォローする</span></button>
+                                <button  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg 
+                                hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" 
+                                onclick="follow({{ $user->id }})"><span id="follow-status-{{ $user->id }}">フォローする</span></button>
                                 @endif
                             @elseif(!$user->profile || !$user->profile->id)
                              <a class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80" href="/userprofile/create">編集</a>
@@ -125,7 +129,7 @@
                         unfollow(userId); // アンフォローを実行する関数を呼び出す
                     }
                 }
-                  
+                
                   function followadd(userId){
                     $.ajax({
                       headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
