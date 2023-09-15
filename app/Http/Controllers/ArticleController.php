@@ -24,18 +24,16 @@ class ArticleController extends Controller
     
     public function show(Article $article,User $user,Comment $comment)
     {
-        //ここからとreturnに$paramを追記
-        $reviews = Article::withCount('likes')->orderBy('id', 'desc')->paginate(10);
+       
         
-        $param = [
-            'reviews' => $reviews,
-             
-        ];
-        //ここまで
+        $articleId=$article->id;
         
-         $comments=$comment->where('article_id','=',$article->id)->orderBy('created_at','Asc')->paginate(10);
+        $likecount=Like::where('article_id', $articleId)->count();
         
-        return view('posts.show',$param)->with(['article' => $article,'users' =>$user->get(),'comments' => $comments]);
+        
+         $comments=$comment->where('article_id','=',$article->id)->orderBy('created_at','Desc')->paginate(10);
+        
+        return view('posts.show')->with(['article' => $article,'users' =>$user->get(),'comments' => $comments,'likecount'=>$likecount]);
        
         
     
@@ -163,7 +161,7 @@ class ArticleController extends Controller
     
         
         //5.この投稿の最新の総いいね数を取得
-        $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;
+        $review_likes_count = Article::withCount('likes')->findOrFail($article_id)->likes_count;//->get()にしてしまうと$review_likes_count->like_countをしないと合計数を獲得できない
         $param = [
             'review_likes_count' => $review_likes_count,
         ];

@@ -19,6 +19,7 @@ use App\Http\Controllers\UserprofileController;
 */
 //Route::get('/', [ArticleController::class, 'index'])->middleware('auth');
 
+//Route::get('/', [ArticleController::class, 'index']);
 
 //Route::get('/dashboard', function () {
     //return view('dashboard');
@@ -26,7 +27,7 @@ use App\Http\Controllers\UserprofileController;
 
 //Route::middleware('auth')->group(function () {
 Route::middleware('verified')->group(function(){
-    Route::get('/', [ArticleController::class, 'index'])->middleware('auth');
+    Route::get('/', [ArticleController::class, 'index']);
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -45,7 +46,7 @@ Route::middleware('verified')->group(function(){
     
     Route::get('/comment/{article}', [HomeController::class,'get']);
     Route::delete('/comment/{comment}', [HomeController::class,'destroy']);
-    Route::delete('/destroy/{id}', [HomeController::class,'commentdestroy']);//削除の非同期
+    Route::get('/logincomment/{comment}', [HomeController::class,'commentdestroy']);
      
    Route::post('/like', [ArticleController::class,'like'])->name('reviews.like');
    Route::post('/like/count', [ArticleController::class,'likecount'])->name('reviews.likecount');
@@ -67,6 +68,8 @@ Route::middleware('verified')->group(function(){
     Route::get('/userprofile/{profile}/edit', [UserprofileController::class, 'edit']);
     Route::put('/userprofile/{profile}', [UserprofileController::class, 'update']);
 });
+
+//Route::get('/posts/{article}', [ArticleController::class ,'show']);
  
 
 require __DIR__.'/auth.php';

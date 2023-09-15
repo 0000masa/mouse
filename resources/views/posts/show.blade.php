@@ -45,23 +45,24 @@
                                     <span class="likes">
                                         いいね
                                         <i class="fas fa-heart like-toggle" data-review-id="{{ $article->id }}"></i>
-                                      <span class="like-counter">{{$article->likes_count}}</span>
+                                      <span class="like-counter"></span>
                                     </span><!-- /.likes -->
                                   @else
                                     <span class="likes">
                                         いいね
                                         <i class="fas fa-heart heart like-toggle liked" data-review-id="{{ $article->id }}"></i>
-                                      <span class="like-counter">{{$article->likes_count}}</span>
+                                      <span class="like-counter">{{$likecount}}</span>
                                     </span><!-- /.likes -->
                                   @endif
-                                @endauth
-                                @guest
-                                  <span class="likes">
-                                      <i class="fas fa-heart heart"></i>
-                                    <span class="like-counter">{{$article->likes_count}}</span>
-                                  </span><!-- /.likes -->
-                                @endguest
-                                </div>
+                             @endauth
+                             @guest
+                               <span class="likes">
+                                   いいね
+                                   <a href="/login"><i class="fas fa-heart heart"></i></a>
+                                 <span class="like-counter">{{$likecount}}</span>
+                               </span><!-- /.likes -->
+                              @endguest
+                            </div>
                         </div>
                     </div>
                     <div class="lg:col-span-2">
@@ -150,15 +151,19 @@
                                     <p class="text-lg font-bold text-gray-800 lg:text-xl">{{ $article->explanation }}</p>   
                                 </div>
                                 
-                                <div class="border-b pb-4 md:pb-6 my-4 ">
+                                <div class="border-b pb-2 md:pb-3 my-1 ">
                                     <p class="text-xl mt-20">コメント一覧</p>
+                                    @auth
                                      <div  id="comment-data"></div>
+                                    @endauth
                                 </div>
                                 
                                 
                               
                                 
                                 <div>
+                                    @auth
+                                   
                                     <form id="comment-form" method="POST" action="/comment">
                                         @csrf
                                         <input type="hidden" name="post[user_id]" value="{{ Auth::user()->id }}">
@@ -167,6 +172,41 @@
                                         <button type="submit" class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">コメントする</button>
                                         <p class="comment__error" style="color:red">{{ $errors->first('post.comment') }}</p>
                                     </form>
+                                    
+                                    @endauth
+                                    @guest
+                                        @foreach($comments as $comment)
+                                        <div class='flex flex-col gap-3 py-4 md:py-8'>
+                                                <div class="block font-bold">
+                                                   
+                                                         @if(!$comment->user->profile || !$comment->user->profile->id)
+                                                           <div class="flex items-center">
+                                                              <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                                <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                              </div>
+                                                              <a class="" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                            </div>
+                                                            @elseif($comment->user->profile->image_url===null)
+                                                                 <div class="flex items-center">
+                                                                  <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                                    <img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1694299123/lxnxz1woewvsxewxdpg1.png" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                                  </div>
+                                                                  <a class="" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                                </div>
+                                                            @else
+                                                                 <div class="flex items-center">
+                                                                  <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                                    <img src="{{$comment->user->profile->image_url}}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                                  </div>
+                                                                  <a class="" href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
+                                                                </div>
+                                                            @endif
+                                                        <p class="">{{ $comment->comment }}</p>
+                                                </div>
+                                        </d>
+                                        @endforeach
+                                    <p class="my-2">コメントするにはログインしてください</p>
+                                    @endguest
                                 </div>
                               
                                 <div>
@@ -186,10 +226,12 @@
        
         
         <script>
+        @auth
        
         
         　const articleId = {{$article->id}};
         
+         const $userID = {{ Auth::user()->id }};
         　 
         　
            const get_data = (articleId) => {
@@ -205,26 +247,34 @@
                             
                              
                         for (var i = 0; i < data.comments.length; i++) {
-                        
+                        let comment = data.comments[i];
                         
                         
                            
                             let html = `
                            
-                                        {{--<div class="media comment-visible">--}}
+                                       
                                        <div id="media comment-visible" class="border-b pb-4 md:pb-6 my-1">
                                             
                                             <div class="media-body comment-body">
-                                                <div class="row">
-                                                    
-                                                    <a  href="/users/${data.comments[i].user_id}">${data.comments[i].name}さん</a>
-                                                    
+                                                <div class='flex flex-col gap-3 py-4 md:py-8'>
+                                                    <div class="block font-bold">
+                                                        <div class="flex items-center">
+                                                            <div class="w-11 h-11 rounded-full overflow-hidden">
+                                                                <img src="${data.comments[i].image_url}" alt="ユーザーのアイコン" class="w-full h-full object-cover" />
+                                                            </div>
+                                                            
+                                                                
+                                                            <a  href="/users/${data.comments[i].user_id}" class="ml-4 text-lg">${data.comments[i].name}</a>
+                                                            
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                        <p class="text-lg font-bold text-gray-800 lg:text-x" id="comment">${data.comments[i].comment}</p>
+                                                         ${($userID === comment.user_id) ? `<a href="/logincomment/${comment.id}" class="inline-block rounded-lg bg-red-500 px-2 py-1 text-center text-sm  text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">削除</a>` : ''}
+                                                    </div>
                                                 </div>
-                                                <span class="comment-body-content" id="comment">${data.comments[i].comment}</span>
-                                               
-                                                
-                                               
-                                                
                                             </div>
                                         </div>
                                         
@@ -252,76 +302,11 @@
               document.addEventListener("DOMContentLoaded", () => {
                 get_data(articleId);
             });
+            @endauth
             </script>
             
             <script>
-             $(document).ready(function() {
-                $(".delete-button").click({{--"click"--}} function(event) {
-                    console.log('test')
-                    {{--event.preventDefault(); //追加--}}
-                    const commentId = $(this).data("comment-id");
-                    const deleteUrl = `/comment/${commentId}`;
-                    const articleId = "{{ $article->id }}"
-                    const formData = { article_id: "{{ $article->id }}",
-                                        comment_id: commentId
-                                        };
-        
-                    // Ajaxリクエストを送信してコメントを削除
-                    $.ajax({
-                        url: deleteUrl,
-                        data: JSON.stringify({ post: formData }),
-                        type: "DELETE",
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                        },
-                        success:()=>{
-                            get_data(articleId);
-                            // コメントの削除に成功した場合、対応するフォームを非表示にする
-                            //$("#form_" + commentId).hide();
-                            // または、ページをリロードしてコメントが消えるのを確認する場合は以下の行をコメントインして使用
-                        　　//location.reload();
-                        },
-                        error: function(xhr) {
-                            alert("コメントの削除に失敗しました");
-                        }
-                    });
-                });
-            });
-        
             
-            $(function() {
-              
-                          $('.btn-danger').on('click', function() {
-                            
-           
-                                
-                                  var clickEle = $(this)
-           
-            
-                                  var commentID = clickEle.attr('data-comment_id');
-                                  var articleId = "{{ $article->id }}";  
-                                     
-                          $.ajax({
-                             type: 'POST',
-                             url: '/destroy/'+commentID, 
-                             dataType: 'json',
-                             data: {'id':commentID},
-                                      
-                            success: function() {
-                    
-                            
-                                get_data(articleId);
-                                
-                                
-                            },
-                            error: function() {
-                                alert("失敗しました");
-                            }
-            
-                        });
-                        
-                  });
-            });
         
         
         
@@ -337,8 +322,7 @@
         
         
         
-        
-        
+           @auth
              $("#comment-form").submit(event => {
             event.preventDefault(); // フォームの通常の送信をキャンセル
              const commentContent = $("textarea[name='post[comment]']").val();
@@ -375,6 +359,7 @@
                 }
             });
             })
+            @endauth
             
            
             </script>
@@ -409,7 +394,7 @@
       
        
        
-        
+        @auth
         <script>
             $(function () {
           let like = $('.like-toggle'); //like-toggleのついたiタグを取得し代入。
@@ -442,6 +427,8 @@
           
           
         </script>
+        @endauth
+        @auth
         <script>
             document.addEventListener('DOMContentLoaded', function() {
             let likeReviewId={{$article->id}};
@@ -466,6 +453,7 @@
             });
             
         </script>
+        @endauth
        </x-app-layout>
     </body>
     

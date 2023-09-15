@@ -45,7 +45,8 @@ class UserprofileController extends Controller
         $input['image_url'] = $image_url;
         
        }
-        //dd($input);
+       
+       
         
         $profile->fill($input)->save();
         
@@ -81,7 +82,8 @@ class UserprofileController extends Controller
         $input['image_url'] = $image_url;
         
        }
-        //dd($input);
+    
+        
         
         $profile->fill($input)->save();
         
