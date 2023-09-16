@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -106,6 +107,10 @@ class HomeController extends Controller
      public function commentdestroy(Comment $comment )
     {
         $articleId=$comment->article_id;
+        if(Auth::user()->id!==$comment->user_id){
+            return redirect('/posts/'.$articleId);
+        };
+        
         
         $comment->delete();
         //$articleId=$request['post.article_id'];
