@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserprofileController;
+use App\Http\Controllers\GoogleLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +35,11 @@ Route::middleware('verified')->group(function(){
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/users/{user}', [UserController::class,'index'])->name('users.index');
     
+    Route::get('/oldest', [ArticleController::class, 'indexoldest']);
+    Route::get('/likemost', [ArticleController::class, 'likemost']);
+    Route::get('/pricemost', [ArticleController::class, 'pricemost']);
+    Route::get('/pricelittle', [ArticleController::class, 'pricelittle']);
+    
     Route::get('/posts/create', [ArticleController::class, 'create']);
     Route::get('/posts/{article}', [ArticleController::class ,'show']);
     Route::post('/posts', [ArticleController::class, 'store']);
@@ -46,7 +52,7 @@ Route::middleware('verified')->group(function(){
     
     Route::get('/comment/{article}', [HomeController::class,'get']);
     Route::delete('/comment/{comment}', [HomeController::class,'destroy']);
-    Route::get('/logincomment/{comment}', [HomeController::class,'commentdestroy']);
+    Route::get('/showcomment/{comment}', [HomeController::class,'commentdestroy']);
      
    Route::post('/like', [ArticleController::class,'like'])->name('reviews.like');
    Route::post('/like/count', [ArticleController::class,'likecount'])->name('reviews.likecount');
@@ -68,6 +74,9 @@ Route::middleware('verified')->group(function(){
     Route::get('/userprofile/{profile}/edit', [UserprofileController::class, 'edit']);
     Route::put('/userprofile/{profile}', [UserprofileController::class, 'update']);
 });
+
+Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth']);
+Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
 
 //Route::get('/posts/{article}', [ArticleController::class ,'show']);
  

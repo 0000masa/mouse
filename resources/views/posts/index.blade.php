@@ -14,8 +14,18 @@
         </x-slot>
         <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="mx-auto max-w-screen-md px-4 md:px-8">
-                <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl xl:mb-12">投稿一覧</h2>
+                <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl xl:mb-12">投稿一覧<span>({{$order}})</span></h2>
                     {{--<div class="mb-4 flex items-center justify-between border-t border-b py-4">--}}
+                      
+                       <select name="select" onChange="location.href=value;"　required>
+                          <option>並び替え</option> 
+                          <option value="/">新しい順</option>
+                          <option value="/oldest">遅い順</option>
+                          <option value="/likemost">いいねが多い順</option>
+                          <option value="/pricemost">金額が高い順</option>
+                          <option value="/pricelittle">金額が低い順</option>
+                        </select>
+                      
                         <div class="divide-y">
                             
                                 @foreach($articles as $article)

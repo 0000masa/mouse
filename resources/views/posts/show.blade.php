@@ -272,7 +272,7 @@
                                                             
                                                         </div>
                                                         <p class="text-lg font-bold text-gray-800 lg:text-x" id="comment">${data.comments[i].comment}</p>
-                                                         ${($userID === comment.user_id) ? `<a href="/logincomment/${comment.id}" class="inline-block rounded-lg bg-red-500 px-2 py-1 text-center text-sm  text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">削除</a>` : ''}
+                                                         ${($userID === comment.user_id) ? `<a href="/showcomment/${comment.id}" class="inline-block rounded-lg bg-red-500 px-2 py-1 text-center text-sm  text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">削除</a>` : ''}
                                                     </div>
                                                 </div>
                                             </div>

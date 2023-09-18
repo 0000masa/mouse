@@ -38,9 +38,11 @@
             @include('layouts.navigation')
             @endauth
             
+            {{--
             @guest
             @include('layouts.guestheader')
             @endguest
+            --}}
                     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                    
                     

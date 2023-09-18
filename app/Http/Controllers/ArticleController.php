@@ -18,7 +18,37 @@ class ArticleController extends Controller
 {
     public function index(Article $article)
     {
-        return view('posts.index')->with(['articles' => $article->getPaginateByLimit()]);  
+        $order="新しい順";
+        return view('posts.index')->with(['articles' => $article->getPaginateByLimit(),'order'=>$order]);  
+       
+    }
+    
+    public function indexoldest(Article $article)
+    {
+        $order="古い順";
+        return view('posts.index')->with(['articles' => $article->orderBy('created_at','asc')->paginate(10),'order'=>$order]);  
+       
+    }
+    
+    public function likemost()
+    {
+        $order="いいねが多い順";
+        $articles = Article::withCount('likes')->orderBy('likes_count', 'desc')->paginate(10);
+        return view('posts.index')->with(['articles' => $articles,'order'=>$order]);  
+       
+    }
+    
+    public function pricemost(Article $article)
+    {
+        $order="金額が高い順";
+        return view('posts.index')->with(['articles' => $article->orderBy('price','desc')->paginate(10),'order'=>$order]);  
+       
+    }
+    
+    public function pricelittle(Article $article)
+    {
+        $order="金額が低い順";
+        return view('posts.index')->with(['articles' => $article->orderBy('price','asc')->paginate(10),'order'=>$order]);  
        
     }
     
