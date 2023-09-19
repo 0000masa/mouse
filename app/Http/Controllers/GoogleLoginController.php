@@ -18,14 +18,22 @@ class GoogleLoginController extends Controller
     
     public function authGoogleCallback()
     {
-          $googleUser = Socialite::driver('google')->stateless()->user();
-        $user = User::firstOrCreate([
-            'email' => $googleUser->email
-        ], [
-            'email_verified_at' => now(),
-            'google_id' => $googleUser->getId()
-        ]);
-        Auth::login($user, true);
-        return redirect('/');
+        $googleUser = Socialite::driver('google')->user();
+        $user = User::firstOrNew(['email' => $googleUser->email]);
+
+        if (!$user->exists) {
+            $user['name'] = $googleUser->getNickName() ?? $googleUser->getName() ?? $googleUser->getNick();
+            $user['email'] = $googleUser->email; // Gmailアドレス
+            $user['password'] = str_random(); // 適当に生成
+
+            $user->save();
+        }
+
+        Auth::login($user);
+        return redirect()->route('/');
     }
+    
+    
+    
+    
 }
