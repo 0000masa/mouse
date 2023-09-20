@@ -26,10 +26,10 @@ url:https://mouse-master-6f482565a08d.herokuapp.com/
 ### 環境
 <p>・AWS</p>
 
-<p>・Laravel 9</p>p
+<p>・Laravel 9</p>
 
 
 ### ER図
 
-<img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1695196854/caicrm8u3knmiil9wz5l.png"/>
+<img src="https://res.cloudinary.com/dphdjsiah/image/upload/v1695197094/dbswpi8ar6fssbfyiydc.png"/>
 
