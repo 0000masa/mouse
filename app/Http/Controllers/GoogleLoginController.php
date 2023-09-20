@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleLoginController extends Controller
 {
-    public function getGoogleAuth()
+    /*public function getGoogleAuth()
     {
         return Socialite::driver('google')
             ->redirect();
@@ -29,7 +29,7 @@ class GoogleLoginController extends Controller
         Auth::login($user, true);
         return view('posts.index');
        
-    }
+    }*/
     
     
     
