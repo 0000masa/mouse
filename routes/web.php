@@ -75,8 +75,8 @@ Route::middleware('verified')->group(function(){
     Route::put('/userprofile/{profile}', [UserprofileController::class, 'update']);
 });
 
-//Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth']);
-//Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
+Route::get('/login/google', [GoogleLoginController::class, 'redirectToGoogle']);
+Route::get('/login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 
 //Route::get('/posts/{article}', [ArticleController::class ,'show']);
  
