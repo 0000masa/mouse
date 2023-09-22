@@ -71,7 +71,7 @@
                             {{ __('プロフィール') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('アカウント情報編集') }}
+                            {{ __('名前変更') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -83,6 +83,12 @@
                                                 this.closest('form').submit();">
                                 {{ __('ログアウト') }}
                             </x-dropdown-link>
+                        </form>
+                        <form onsubmit="return confirm('本当に削除しますか？')" method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                            @csrf
+                            @method('delete')
+                            <x-danger-button
+                            >{{ __('Delete Account') }}</x-danger-button>
                         </form>
                     </x-slot>
                 </x-dropdown>
@@ -155,7 +161,7 @@
                     {{ __('プロフィール') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('アカウント情報編集') }}
+                    {{ __('名前変更') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -167,6 +173,12 @@
                                         this.closest('form').submit();">
                         {{ __('ログアウト') }}
                     </x-responsive-nav-link>
+                </form>
+                <form onsubmit="return confirm('本当に削除しますか？')" method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                    @csrf
+                    @method('delete')
+                    <x-danger-button
+                    >{{ __('Delete Account') }}</x-danger-button>
                 </form>
             </div>
         </div>
