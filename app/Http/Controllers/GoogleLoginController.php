@@ -32,6 +32,7 @@ class GoogleLoginController extends Controller
     {
         $gUser = Socialite::driver('google')->stateless()->user();
         // email が合致するユーザーを取得
+        //dd($gUser);
         $user = User::where('email', $gUser->email)->first();
         // 見つからなければ新しくユーザーを作成
         if ($user == null) {
