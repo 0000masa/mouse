@@ -37,8 +37,11 @@ Route::middleware('verified')->group(function(){
     
     Route::get('/oldest', [ArticleController::class, 'indexoldest']);
     Route::get('/likemost', [ArticleController::class, 'likemost']);
+    Route::get('/likelittle', [ArticleController::class, 'likelittle']);
     Route::get('/pricemost', [ArticleController::class, 'pricemost']);
     Route::get('/pricelittle', [ArticleController::class, 'pricelittle']);
+    Route::get('/evaluationmost', [ArticleController::class, 'evaluationmost']);
+    Route::get('/evaluationlittle', [ArticleController::class, 'evaluationlittle']);
     
     Route::get('/posts/create', [ArticleController::class, 'create']);
     Route::get('/posts/{article}', [ArticleController::class ,'show']);

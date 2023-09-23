@@ -38,6 +38,14 @@ class ArticleController extends Controller
        
     }
     
+    public function likelittle()
+    {
+        $order="いいねが少ない順";
+        $articles = Article::withCount('likes')->orderBy('likes_count', 'asc')->paginate(10);
+        return view('posts.index')->with(['articles' => $articles,'order'=>$order]);  
+       
+    }
+    
     public function pricemost(Article $article)
     {
         $order="金額が高い順";
@@ -49,6 +57,20 @@ class ArticleController extends Controller
     {
         $order="金額が低い順";
         return view('posts.index')->with(['articles' => $article->orderBy('price','asc')->paginate(10),'order'=>$order]);  
+       
+    }
+    
+    public function evaluationmost(Article $article)
+    {
+        $order="評価が高い順";
+        return view('posts.index')->with(['articles' => $article->orderBy('evaluation_id','asc')->paginate(10),'order'=>$order]);  
+       
+    }
+    
+    public function evaluationlittle(Article $article)
+    {
+        $order="評価が低い順";
+        return view('posts.index')->with(['articles' => $article->orderBy('evaluation_id','desc')->paginate(10),'order'=>$order]);  
        
     }
     

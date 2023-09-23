@@ -22,6 +22,9 @@
                           <option value="/">新しい順</option>
                           <option value="/oldest">遅い順</option>
                           <option value="/likemost">いいねが多い順</option>
+                          <option value="/likelittle">いいねが少ない順</option>
+                          <option value="/evaluationmost">評価が高い順</option>
+                          <option value="/evaluationlittle">評価が低い順</option>
                           <option value="/pricemost">金額が高い順</option>
                           <option value="/pricelittle">金額が低い順</option>
                         </select>
