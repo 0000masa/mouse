@@ -118,13 +118,17 @@ class ArticleController extends Controller
         ]);
         $input = $request['post'];
         
+        //dd($input);
        if ($request->hasFile('post.image_url')) {
+        //$test = $request->file('post.image_url');
+        //dd($test);
         $image_url = Cloudinary::upload($request->file('post.image_url')->getRealPath())->getSecurePath();
         //$input += ['image_url' => $image_url];
         
         $input['image_url'] = $image_url;
         
        }
+       
 
         
         $article->fill($input)->save();
@@ -159,6 +163,7 @@ class ArticleController extends Controller
         ]);
         
         $input_post = $request['post'];
+        //dd($input_post);
         
         if ($request->hasFile('post.image_url')) {
         $image_url = Cloudinary::upload($request->file('post.image_url')->getRealPath())->getSecurePath();

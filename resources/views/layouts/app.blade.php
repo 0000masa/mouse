@@ -34,6 +34,7 @@
             <!-- Page Heading -->
             @if (isset($header))
             <header class="text-gray-600 body-font">
+            
             @auth    
             @include('layouts.navigation')
             @endauth
@@ -43,28 +44,22 @@
             @include('layouts.guestheader')
             @endguest
             --}}
-                    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+                    {{--<div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                    
                     
                       <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                         
                         
                              
-                             <a href="/searches" class="mr-5 text-indigo-800 hover:text-blue-400">マウス検索</a>
-                             <a href="/usersearches" class="mr-5 text-indigo-800 hover:text-blue-400">ユーザー検索</a>
-                             <a href="/posts/create" class="mr-5 text-indigo-800 hover:text-blue-400">新規投稿作成</a>
-                             @auth
-                             <a href="/follow/{{Auth::user()->id}}" class="mr-5 text-indigo-800 hover:text-blue-400">フォローしたユーザーの投稿</a>
-                             @endauth
-                             @guest
-                             <a href="/login" class="mr-5 text-indigo-800 hover:text-blue-400">フォローしたユーザーの投稿</a>
-                             @endguest
-                        
-                            {{--{{ $header }}--}}
+                         <a href="/searches" class="mr-5 text-indigo-800 hover:text-blue-400">マウス検索</a>
+                         <a href="/usersearches" class="mr-5 text-indigo-800 hover:text-blue-400">ユーザー検索</a>
+                         <a href="/posts/create" class="mr-5 text-indigo-800 hover:text-blue-400">新規投稿作成</a>
+                         <a href="/follow/{{Auth::user()->id}}" class="mr-5 text-indigo-800 hover:text-blue-400">フォローしたユーザーの投稿</a>
                        
                       </nav>
                   
-                      </div>
+                     </div>--}}
+                      
                        
                   
             </header>    

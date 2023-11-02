@@ -41,6 +41,7 @@ class HomeController extends Controller
             });
         $query->where('article_id', '=', $articleId);
         $query->orderBy('comments.created_at', 'Desc');
+        
         $comments = $query->paginate(10);
         //$comments= Comment::where('article_id', $articleId)->paginate(10);
         //$comments = Comment::orderBy('created_at','desc')->get();

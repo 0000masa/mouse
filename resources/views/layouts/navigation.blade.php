@@ -2,26 +2,29 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex ">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="/">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
+                <a href="/" class="flex items-center">
+                    <x-application-logo class="mr-3 h-6 sm:h-9"  />
+                 </a>
+                
             
                 <!-- Navigation Links -->
-                {{--<nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+                <nav class="sm:mr-auto sm:ml-4 sm:py-1 sm:pl-4  sm:border-gray-400	hidden sm:flex flex-wrap items-center text-base justify-between">
                     
-                    <div class="space-x-12 font-bold">
+                    <div class="space-x-5 font-bold">
                          
-                         <a href="/searches" class="mr-5 hover:text-gray-900">マウス検索</a>
-                         <a href="/usersearches" class="mr-5 hover:text-gray-900">ユーザー検索</a>
-                         <a href="/posts/create" class="mr-5 hover:text-gray-900">新規投稿作成</a>
-                         <a href="/follow/{{Auth::user()->id}}" class="mr-5 hover:text-gray-900">フォローした人の投稿</a>
-                        {{ $header }}
+                         <a href="/searches" class="mr-2 hover:text-gray-900">マウス検索</a>
+                         <a href="/usersearches" class="mr-2 hover:text-gray-900">ユーザー検索</a>
+                         <a href="/posts/create" class="mr-2 hover:text-gray-900">投稿</a>
+                         <a href="/follow/{{Auth::user()->id}}" class="mr-2 hover:text-gray-900">フォロー中</a>
+                        
                     </div>
-                </nav>--}}
+                   
+                </nav>
+                
+               
+               
                 
             </div>
 
@@ -157,6 +160,18 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                 <x-responsive-nav-link :href="'/searches'">
+                    {{ __('マウス検索') }}
+                </x-responsive-nav-link>
+                 <x-responsive-nav-link :href="'/usersearches'">
+                    {{ __('ユーザー検索') }}
+                </x-responsive-nav-link>
+                 <x-responsive-nav-link :href="'/posts/create'">
+                    {{ __('新規投稿作成') }}
+                </x-responsive-nav-link>
+                 <x-responsive-nav-link :href="'/follow/'.Auth::user()->id">
+                    {{ __('フォロー中') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="'/users/'.Auth::user()->id">
                     {{ __('プロフィール') }}
                 </x-responsive-nav-link>
@@ -180,6 +195,8 @@
                     <x-danger-button
                     >{{ __('Delete Account') }}</x-danger-button>
                 </form>
+    
+                
             </div>
         </div>
     </div>
