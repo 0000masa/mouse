@@ -12,6 +12,7 @@
          <x-slot name="header">
              
         </x-slot>
+        
         <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="mx-auto max-w-screen-md px-4 md:px-8">
                 <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl xl:mb-12">投稿一覧<span>({{$order}})</span></h2>

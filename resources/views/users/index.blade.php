@@ -12,6 +12,7 @@
         <x-app-layout>
             
          <x-slot name="header">
+             
         
         </x-slot>
          <div class="bg-white py-6 sm:py-8 lg:py-12">
