@@ -1,6 +1,6 @@
 <x-guest-layout>
     <!-- Session Status -->
-    <meta name="description" content="ゲーミングマウスを投稿して比較するサイトです">
+    
     <x-auth-session-status class="mb-4" :status="session('status')" />
    <div class="flex flex-col gap-4 p-4 md:p-8">
         <form method="POST" action="{{ route('login') }}">
